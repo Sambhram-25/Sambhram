@@ -19,12 +19,19 @@ const EventCard = ({eventDatas}) => {
                             onClick={() => toggleFlip(event._id)}
                         >
                             <div className="front"> 
-                                <img src={`/${event.eventSubName}.jpg`} alt="" />
+                                {/* Use a default image if eventSubName is missing or image doesn't exist */}
+                                <img 
+                                    src={event.eventSubName ? `/${event.eventSubName}.jpg` : '/error.jpg'} 
+                                    onError={(e) => {
+                                        e.target.src = '/error.jpg'; // Fallback image
+                                    }}
+                                    alt={event.eventName} 
+                                />
                                 <div className="event-card-content">
                                     <div className="card-front-top">
                                         <div className="event-card-names">
                                             <p>{event.eventName}</p>
-                                            <p className='event-subname'>{event.eventSubName}</p>
+                                            {event.eventSubName && <p className='event-subname'>{event.eventSubName}</p>}
                                         </div>
                                     </div>
                                     <div className="event-buttons">

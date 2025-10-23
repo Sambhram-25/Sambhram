@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { eventsData } from "../sampleDB"; // Import the sample database
 
 const url = process.env.REACT_APP_URL;
 const razorpayKey = process.env.REACT_APP_RAZORPAY_ID;
@@ -65,13 +66,17 @@ export const ContextProvider = ({ children }) => {
       if (cachedData) {
         setEventDatas(JSON.parse(cachedData));
       }
-      await fetchEvents();
+      // Use sample data directly instead of fetching from API
+      setEventDatas(eventsData);
+      localStorage.setItem("eventDatas", JSON.stringify(eventsData));
     } catch (error) {
       console.error("Error loading events:", error);
       toast.error("Failed to load events");
     }
   };
 
+  // Comment out the API fetch function since we're using sample data
+  /*
   const fetchEvents = async () => {
     try {
       const response = await axios.get(`${url}/api/v1/auth/events`);
@@ -88,6 +93,7 @@ export const ContextProvider = ({ children }) => {
       throw error;
     }
   };
+  */
 
   const closed_events = [
   ];
