@@ -4,7 +4,7 @@
   height: 150vh;
   display: flex;
   justify-content: center;  
-  background: radial-gradient(#882222,#35060e);
+  background: radial-gradient(#223388,#0e0635);
 } 
 .checkout-container {
   position: absolute;
@@ -88,7 +88,7 @@
   }
 
 .continue-button {
-  background-color: #ff1100;
+  background-color: #0066ff;
   padding: 10px;
   color: white;
   border: none;

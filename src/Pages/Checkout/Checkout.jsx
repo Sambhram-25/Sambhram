@@ -93,7 +93,7 @@ const CheckoutPage = () => {
   return (
     <div className="checkout-flex">
       {/* <div className="back" onClick={handleBack}>
-        <i className="fa-solid fa-circle-chevron-left fa-2xl" style={{ color: "#d53810" }}></i>
+        <i className="fa-solid fa-circle-chevron-left fa-2xl" style={{ color: "#1038d5" }}></i>
       </div> */}
       <div className="checkout-container">
         <img className='checkout-container-img' src="Bg-reg.jpg" alt="" />

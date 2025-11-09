@@ -12,7 +12,7 @@
 .confirm-div {
     min-height: 350px;
     width: 350px;
-    background-color: rgba(31, 1, 1, 0.7);
+    background-color: rgba(1, 1, 31, 0.7);
     backdrop-filter: blur(15px);
     padding: 20px;
     display: flex;
@@ -44,7 +44,7 @@
 
 .grand-total-final {
     font-size: 18px;
-    color: #ff1100;
+    color: #0066ff;
 }
 
 .close-confirm {

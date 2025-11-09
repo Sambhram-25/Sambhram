@@ -7,7 +7,7 @@
 
 .items-section h4 {
     text-align: center;
-    text-shadow: 0 0 4px rgba(254, 0, 0, 0.61);
+    text-shadow: 0 0 4px rgba(0, 102, 255, 0.61);
 }
 
 .coupon-current {
@@ -17,7 +17,7 @@
 }
 
 .coupon-current p {
-    color: #ff2010;
+    color: #0066ff;
 }
 
 .item-section-head {
@@ -112,7 +112,7 @@
     margin: 10px 0 20px 3px;
     top: 6px;
     font-size: 14px;
-    color: #fa4e4e;
+    color: #4e9afa;
 }
 
 .coupon-desc-section {
@@ -161,7 +161,7 @@
 
 .grand-total {
     font-weight: bold;
-    color: #ff2010;
+    color: #0066ff;
 }
 
 .price p {

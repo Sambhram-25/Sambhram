@@ -94,7 +94,7 @@ const SelectedItemSection = ({ items }) => {
               <span className="price">₹ 100</span>
             </div>
             <div className="cancel">
-              <i className="fa-solid fa-xmark" onClick={() => selectEvent(item._id)} style={{ color: '#a30000' }}></i>
+              <i className="fa-solid fa-xmark" onClick={() => selectEvent(item._id)} style={{ color: '#0033a3' }}></i>
             </div>
           </div>
         ))
