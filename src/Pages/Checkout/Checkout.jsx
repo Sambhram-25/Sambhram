@@ -10,14 +10,14 @@ import Preloader from '../../Components/Preloader/Preloader';
 import ConfirmSection from '../../RegisterComponents/ConfirmSection/ConfirmSection';
 
 const CheckoutPage = () => {
-  const { selectedEvent, setSelectedEvent, eventDatas, setAmount, amount, payNow, step, data, setStep } = useContext(StoreContext);
+  const { selectedEvent, setSelectedEvent, eventDatas, setAmount, amount, payNow, step, data, setStep, setData, eventRegistrations } = useContext(StoreContext);
 
   const [selectedCoupon, setSelectedCoupon] = useState(null);
   const [confirmSection, setConfirmSection] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Spinner loading state
 
 
-  const items = eventDatas.filter(event => selectedEvent.includes(event._id));
+  const items = eventDatas.filter(event => selectedEvent.includes(event._id ?? event.id));
   
   const navigate = useNavigate();
  
@@ -35,6 +35,43 @@ const CheckoutPage = () => {
     setAmount(() => grandTotal)
     console.log(amount)
   }, [grandTotal]);
+
+  // Register first for all cases; team details were collected in popup
+
+  const isTeamEvent = (e) => {
+    const size = e?.teamSize;
+    if (!size) return false;
+    const s = String(size).toLowerCase();
+    if (s.includes('team')) return true;
+    const nums = String(size).match(/\d+/g);
+    return nums ? Number(nums?.[0]) > 1 : false;
+  };
+
+  // Prefill Register fields with team leader details from any selected team event (from popup)
+  useEffect(() => {
+    if (step !== 1) return; // only when on Register step
+    const teamEventWithDetails = items.find(ev => {
+      if (!isTeamEvent(ev)) return false;
+      const id = ev._id ?? ev.id;
+      const reg = eventRegistrations?.[id];
+      return reg?.leader?.name || reg?.leader?.phone;
+    });
+
+    if (teamEventWithDetails) {
+      const id = teamEventWithDetails._id ?? teamEventWithDetails.id;
+      const reg = eventRegistrations?.[id];
+      const leaderName = reg?.leader?.name || "";
+      const leaderEmail = reg?.leader?.email || "";
+      const leaderPhone = reg?.leader?.phone || "";
+
+      setData(prev => ({
+        ...prev,
+        name: prev.name && prev.name.trim() ? prev.name : leaderName,
+        email: prev.email && prev.email.trim() ? prev.email : leaderEmail,
+        mobile: prev.mobile && String(prev.mobile).trim() ? prev.mobile : leaderPhone
+      }));
+    }
+  }, [step, items, eventRegistrations]);
 
   if (selectedEvent.length == 0) {
     navigate('/events');
@@ -58,12 +95,27 @@ const CheckoutPage = () => {
 
   const validateForm = () => {
 
-    if (data.college === "Other") {
-      data.college = data.Othercollege
+    const resolvedCollege = data.college === "Other" ? data.Othercollege : data.college;
+    const resolvedBranch = data.branch === "Other" ? data.Otherbranch : data.branch;
+
+    if (!resolvedCollege) {
+      toast.error("Please enter your college name.");
+      return;
     }
 
-    if (!data.name || !data.usn || !data.college || !data.mobile || data.college == "Other") {
+    if (!resolvedBranch) {
+      toast.error("Please enter your branch.");
+      return;
+    }
+
+    if (!data.name || !data.email || !data.mobile) {
       toast.error("Please fill out all fields.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      toast.error("Please enter a valid email address.");
       return;
     }
 
@@ -71,6 +123,19 @@ const CheckoutPage = () => {
       toast.error("Please enter a valid 10-digit mobile number.");
       return;
     }
+
+    // Persist resolved values so they get sent correctly
+    if (data.college === "Other" || data.branch === "Other") {
+      setData(prev => ({
+        ...prev,
+        college: data.college,
+        branch: data.branch,
+        Othercollege: data.college === "Other" ? resolvedCollege : prev.Othercollege,
+        Otherbranch: data.branch === "Other" ? resolvedBranch : prev.Otherbranch,
+      }));
+    }
+
+    // No team validation here; team details are collected in the popup when adding team events
 
     setConfirm();
 
@@ -100,20 +165,20 @@ const CheckoutPage = () => {
         <div className="steps">
           <div className="step">
             <div className={`circle ${step >= 1 ? 'active' : ''}`}>1</div>
-            <div className={`step-title ${step >= 1 ? 'active' : ''}`}>Checkout</div>
+            <div className={`step-title ${step >= 1 ? 'active' : ''}`}>Register</div>
           </div>
           <div className="step">
             <div className={`circle ${step >= 2 ? 'active' : ''}`}>2</div>
-            <div className={`step-title ${step >= 2 ? 'active' : ''}`}>Register</div>
+            <div className={`step-title ${step >= 2 ? 'active' : ''}`}>Checkout</div>
           </div>
         </div>
 
         {step === 1 &&
-          <SelectedItemSection items={items} />
+          <RegistrationForm />
         }
 
         {step === 2 &&
-          <RegistrationForm />
+          <SelectedItemSection items={items} />
         }
       </div>
       {

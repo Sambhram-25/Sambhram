@@ -18,6 +18,7 @@ export const ContextProvider = ({ children }) => {
   const [amount, setAmount] = useState(0);
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [eventRegistrations, setEventRegistrations] = useState({}); // per-event details entered from popup
 
   const [stOrderId, setStOrderId] = useState(() => {
     const savedOrderIds = localStorage.getItem("stOrderIds");
@@ -31,10 +32,18 @@ export const ContextProvider = ({ children }) => {
 
   const [data, setData] = useState({
     name: "",
-    usn: "",
+    email: "",
     college: "",
+    branch: "",
     mobile: "",
     Othercollege: "",
+    Otherbranch: "",
+    // Team details (optional; shown only for team events)
+    teamLeaderName: "",
+    teamLeaderEmail: "",
+    teamLeaderPhone: "",
+    teamLeaderAltPhone: "",
+    teamMembers: [] // [{ name, email }]
   });
 
   const [selectedEvent, setSelectedEvent] = useState(() => {
@@ -59,6 +68,16 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     loadEvents();
   }, []);
+
+  const isIndividualEvent = (e) => {
+    const size = e?.teamSize;
+    if (!size) return true;
+    const s = String(size).toLowerCase();
+    if (s.includes('individual')) return true;
+    if (s.includes('team')) return false;
+    const nums = String(size).match(/\d+/g);
+    return nums ? Number(nums?.[0]) <= 1 : true;
+  };
 
   const loadEvents = async () => {
     try {
@@ -118,11 +137,24 @@ export const ContextProvider = ({ children }) => {
   };
 
   const validatePaymentData = () => {
-    const requiredFields = ["name", "usn", "college", "mobile"];
-    const missingFields = requiredFields.filter((field) => !data[field]);
+    const resolvedCollege = data.college === "Other" ? data.Othercollege : data.college;
+    const resolvedBranch = data.branch === "Other" ? data.Otherbranch : data.branch;
+
+    const missingFields = [];
+
+    if (!data.name) missingFields.push("name");
+    if (!data.email) missingFields.push("email");
+    if (!resolvedCollege) missingFields.push("college");
+    if (!resolvedBranch) missingFields.push("branch");
+    if (!data.mobile) missingFields.push("mobile");
 
     if (missingFields.length > 0) {
       throw new Error(`Missing required fields: ${missingFields.join(", ")}`);
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      throw new Error("Invalid email");
     }
 
     if (!selectedEvent.length) {
@@ -135,13 +167,35 @@ export const ContextProvider = ({ children }) => {
   };
 
   const preparePaymentData = () => {
+    const resolvedCollege = data.college === "Other" ? data.Othercollege : data.college;
+    const resolvedBranch = data.branch === "Other" ? data.Otherbranch : data.branch;
+
+    // include global team details if provided (legacy)
+    const teamDetails = {
+      leader: {
+        name: data.teamLeaderName || undefined,
+        email: data.teamLeaderEmail || undefined,
+        phone: data.teamLeaderPhone || undefined,
+        altPhone: data.teamLeaderAltPhone || undefined,
+      },
+      members: (data.teamMembers || []).filter(m => m?.name || m?.email).map(m => ({
+        name: m.name || "",
+        email: m.email || ""
+      }))
+    };
+
     return {
       name: data.name,
-      usn: data.usn,
-      college: data.college,
+      email: data.email,
+      college: resolvedCollege,
+      branch: resolvedBranch,
       phone: data.mobile,
       amount: amount,
-      registrations: selectedEvent.map((id) => ({ event_id: id })),
+      registrations: selectedEvent.map((id) => ({
+        event_id: id,
+        details: eventRegistrations?.[id] || {}
+      })),
+      teamDetails
     };
   };
 
@@ -270,10 +324,17 @@ export const ContextProvider = ({ children }) => {
   const resetForm = () => {
     setData({
       name: "",
-      usn: "",
+      email: "",
       college: "",
+      branch: "",
       mobile: "",
       Othercollege: "",
+      Otherbranch: "",
+      teamLeaderName: "",
+      teamLeaderEmail: "",
+      teamLeaderPhone: "",
+      teamLeaderAltPhone: "",
+      teamMembers: []
     });
     setStep(1);
     setSelectedEvent([]);
@@ -302,6 +363,8 @@ export const ContextProvider = ({ children }) => {
     resetForm,
     stOrderId,
     setStOrderId,
+    eventRegistrations,
+    setEventRegistrations,
   };
 
   return (

@@ -64,6 +64,16 @@
     margin-top: 7px;
 }
 
+/* Hide number input spinners (arrows) for phone fields */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 @media (max-width:700px) {
     .registration-form p {
         font-size: 12px;

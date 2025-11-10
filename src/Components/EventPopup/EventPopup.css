@@ -142,6 +142,16 @@
     border: 2px solid red;
 }
 
+/* Hide number input spinners in popup for phone fields */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 .close-icon {
     width: 100%;
     height: 40px;

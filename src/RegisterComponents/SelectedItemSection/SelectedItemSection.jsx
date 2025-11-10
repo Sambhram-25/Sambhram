@@ -58,6 +58,9 @@ const SelectedItemSection = ({ items }) => {
       description: "Ultimate fest experience! Select any 4 events with a massive ₹150 discount. Mix performances and tech shows - create your perfect festival adventure!"
     }
   ]
+  const getId = (e) => e?._id ?? e?.id;
+  const getTitle = (e) => e?.eventName ?? e?.title ?? '';
+
   return (
     <div className="items-section">
       {
@@ -88,13 +91,13 @@ const SelectedItemSection = ({ items }) => {
       <h4>SELECTED EVENTS</h4>
       <div className="item-rows">
         {items.map((item) => (
-          <div className="item-row" key={item._id}>
+          <div className="item-row" key={getId(item)}>
             <div className="items">
-              <span className="name">{item.eventName}</span>
+              <span className="name">{getTitle(item)}</span>
               <span className="price">₹ 100</span>
             </div>
             <div className="cancel">
-              <i className="fa-solid fa-xmark" onClick={() => selectEvent(item._id)} style={{ color: '#0033a3' }}></i>
+              <i className="fa-solid fa-xmark" onClick={() => selectEvent(getId(item))} style={{ color: '#0033a3' }}></i>
             </div>
           </div>
         ))

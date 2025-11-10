@@ -84,7 +84,7 @@ const RegistrationForm = () => {
     ];
 
 
-    const { data, setData } = useContext(StoreContext)
+    const { data, setData, selectedEvent, eventDatas } = useContext(StoreContext)
     const onChangeHandler = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -98,7 +98,6 @@ const RegistrationForm = () => {
             <form action="" className='registration-form'>
 
                 <h2>ENTER YOUR DETAILS</h2>
-                <p className='team-event-warning'><i className="fa-solid fa-circle-exclamation">&nbsp;&nbsp;</i>For team events, all team members must register individually.</p>
                 <input
                     type="text"
                     placeholder="Enter Your Name"
@@ -108,11 +107,11 @@ const RegistrationForm = () => {
                     required
                 />
                 <input
-                    type="text"
-                    placeholder="Enter USN"
-                    name="usn"
+                    type="email"
+                    placeholder="Enter Your Email"
+                    name="email"
                     onChange={onChangeHandler}
-                    value={data.usn}
+                    value={data.email}
                     required
                 />
                 <select
@@ -138,6 +137,28 @@ const RegistrationForm = () => {
                     </>
                 }
 
+                <select
+                    name="branch"
+                    onChange={onChangeHandler}
+                    value={data.branch}
+                    required
+                >
+                    <option value="" disabled>Select Your Branch</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="MBA">MBA</option>
+                    <option value="Other">Other</option>
+                </select>
+                {
+                    data.branch == "Other" ? <input
+                        type="text"
+                        placeholder="Enter Branch Name"
+                        name="Otherbranch"
+                        onChange={onChangeHandler}
+                        value={data.Otherbranch}
+                        required
+                    /> : <></>
+                }
+
                 <input
                     type="number"
                     placeholder="Enter Your Mobile Number"
@@ -146,6 +167,7 @@ const RegistrationForm = () => {
                     value={data.mobile}
                     required
                 />
+
             </form>
 
 

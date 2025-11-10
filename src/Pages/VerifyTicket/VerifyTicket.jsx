@@ -94,7 +94,7 @@ const VerifyTicket = () => {
                             </div>
                             <div className="participant-detail">
                                 <p>USN</p>
-                                <p>{participantData.usn || 'N/A'}</p>
+                                <p>{participantData.email || 'N/A'}</p>
                             </div>
                             <div className="participant-detail">
                                 <p>College</p>
