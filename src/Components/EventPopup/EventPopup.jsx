@@ -17,24 +17,43 @@ const EventPopup = () => {
     const isTeamEvent = (e) => {
         const size = e?.teamSize;
         if (!size) return false;
+        if (String(size).toLowerCase().includes('individual')) return false;
         if (String(size).toLowerCase().includes('team')) return true;
         const nums = String(size).match(/\d+/g);
         return nums ? Number(nums?.[0]) > 1 : false;
     };
+    
     const parseMaxMembers = (e) => {
+        const title = getTitle(e)?.toLowerCase();
         const ts = e?.teamSize ? String(e.teamSize) : '';
+        
+        // Specific event mappings based on requirements and database
+        if (title === "eyes off! code on") return 1; // 1 additional member (2 total)
+        if (title === "webverse") return 1; // 1 additional member (2 total)
+        if (title === "line quest") return 4; // 4 additional members (5 total)
+        if (title === "shark tank") return 3; // 3 additional members (4 total)
+        if (title === "dashing dashboards") return 1; // 1 additional member (2 total)
+        if (title === "aqua ignition") return 1; // 1 additional member (2 total)
+        if (title === "flight embers") return 1; // 1 additional member (2 total)
+        if (title === "protoview") return 3; // 3 additional members (4 total)
+        if (title === "botfury") return 2; // 2 additional members (3 total)
+        if (title === "circuit craze") return 1; // 1 additional member (2 total)
+        if (title === "gerber battle") return 1; // 1 additional member (2 total)
+        
+        // Parse from teamSize field
         const nums = ts.match(/\d+/g);
         if (nums && nums.length) {
-            return Math.max(...nums.map(n => Number(n)));
+            // For ranges like "2-4 members", take the maximum
+            return Math.max(...nums.map(n => Number(n))) - 1; // Subtract 1 for leader
         }
-        if (ts.toLowerCase().includes('team')) return 4;
-        return 1;
+        if (ts.toLowerCase().includes('team')) return 3; // Default for team events
+        return 0; // Individual events
     };
 
     const id = getId(eventObj);
     const reg = eventRegistrations?.[id] || { leader: { name: "", email: "", phone: "", altPhone: "" }, members: [] };
-    const maxMembers = Math.min(parseMaxMembers(eventObj), 4);
-    const maxAdditional = Math.max(0, maxMembers - 1);
+    const maxAdditional = parseMaxMembers(eventObj); // Maximum additional members
+    const maxMembers = maxAdditional + 1; // Total team size (leader + members)
 
     const updateReg = (next) => {
         setEventRegistrations(prev => ({ ...prev, [id]: next }));

@@ -13,8 +13,9 @@
   margin-top: 70px;
   background-color: #ffffff08;
   border-radius: 20px;
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to visible to allow dropdown to extend */
   box-shadow: 0 0 10px 6px rgba(255, 255, 255, 0.1);
+  padding-bottom: 100px; /* Add extra space at bottom for dropdown */
 }
 .checkout-container-img{
   position: absolute;
@@ -129,6 +130,7 @@
   .checkout-container {
     width: 90%;
     top: 20px;
+    padding-bottom: 150px; /* More space on mobile */
   }
 
   .continue-button {
