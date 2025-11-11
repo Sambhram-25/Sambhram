@@ -85,7 +85,6 @@ const EventPopup = () => {
 
     const addMember = () => {
         const members = Array.isArray(reg.members) ? [...reg.members] : [];
-        if (members.length >= maxAdditional) return;
         members.push({ name: "", email: "" });
         updateReg({ ...reg, members });
     };
@@ -123,14 +122,7 @@ const EventPopup = () => {
                 // If only leader is filled, we need (minMembers - 1) additional members
                 // If leader and some members are filled, we need (minMembers - filledMembers) additional members
                 const neededMembers = minMembers - filledMembers;
-                alert(`This event requires ${minMembers}-${maxMembers} team members. Please add at least ${neededMembers} more member(s).`);
-                return;
-            }
-            
-            // Validate maximum team size (including team leader)
-            if (filledMembers > maxMembers) {
-                const excessMembers = filledMembers - maxMembers;
-                alert(`This event allows a maximum of ${maxMembers} team members. Please remove ${excessMembers} member(s).`);
+                alert(`This event requires at least ${minMembers} team members. Please add at least ${neededMembers} more member(s).`);
                 return;
             }
             
@@ -226,7 +218,7 @@ const EventPopup = () => {
                                                     value={reg.leader?.altPhone || ""} 
                                                     onChange={(e) => handleLeaderChange('altPhone', e.target.value)} 
                                                 />
-                                                <h4>Team Members ({minMembers}-{maxMembers} members total)</h4>
+                                                <h4>Team Members ({minMembers}+ members total)</h4>
                                                 {Array.isArray(reg.members) && reg.members.map((m, idx) => (
                                                     <div key={idx} className="team-member-row">
                                                         <input 
@@ -248,23 +240,22 @@ const EventPopup = () => {
                                                         ></i>
                                                     </div>
                                                 ))}
-                                                {(reg.members?.length || 0) < maxAdditional && (
-                                                    <button 
-                                                        type="button" 
-                                                        className="view-rule-btn" 
-                                                        onClick={addMember}
-                                                    >
-                                                        <i className="fa-solid fa-plus"></i> Add Member
-                                                    </button>
-                                                )}
+                                                {/* Always show the add member button since there's no maximum limit */}
+                                                <button 
+                                                    type="button" 
+                                                    className="view-rule-btn" 
+                                                    onClick={addMember}
+                                                >
+                                                    <i className="fa-solid fa-plus"></i> Add Member
+                                                </button>
                                                 {Array.isArray(reg.members) && reg.members.length >= minAdditional && minAdditional > 0 && (
                                                     <div className="team-form-note">
-                                                        <p><small><i className="fa-solid fa-check-circle" style={{color: '#4CAF50'}}></i> Team size requirement met ({minMembers}-{maxMembers} members)</small></p>
+                                                        <p><small><i className="fa-solid fa-check-circle" style={{color: '#4CAF50'}}></i> Minimum team size requirement met ({minMembers}+ members)</small></p>
                                                     </div>
                                                 )}
                                                 {Array.isArray(reg.members) && reg.members.length < minAdditional && minAdditional > 0 && (
                                                     <div className="team-form-note">
-                                                        <p><small><i className="fa-solid fa-exclamation-triangle" style={{color: '#FFC107'}}></i> Requires {minMembers}-{maxMembers} team members</small></p>
+                                                        <p><small><i className="fa-solid fa-exclamation-triangle" style={{color: '#FFC107'}}></i> Requires at least {minMembers} team members</small></p>
                                                     </div>
                                                 )}
                                                 <div className="team-form-note">

@@ -127,10 +127,6 @@ export const ContextProvider = ({ children }) => {
       setSelectedEvent((prev) => prev.filter((eventId) => eventId !== id));
       toast.success("Event removed");
     } else {
-      if (selectedEvent.length >= 4) {
-        toast.warn("Maximum 4 events can be selected");
-        return;
-      }
       setSelectedEvent((prev) => [...prev, id]);
       toast.success("Event added");
     }
