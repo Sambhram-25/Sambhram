@@ -106,6 +106,28 @@
     padding: 5px 10px;
 }
 
+.rules {
+    margin: 15px 0;
+}
+
+.rule {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.rule-arrow {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.rule-text {
+    flex: 1;
+    color: #ffffff;
+}
+
 .event-details-section {
     margin-top: 20px;
     padding: 15px;
@@ -485,6 +507,15 @@ input[type=number] {
     .event-popup {
         height: 500px; /* Slightly reduced for very small screens */
     }
+    
+    .rule-arrow {
+        font-size: 10px;
+        margin-right: 6px;
+    }
+    
+    .rule-text {
+        font-size: 10px;
+    }
 }
 
 /* Add mobile styles for the popup container */
@@ -521,6 +552,19 @@ input[type=number] {
     .rule p {
         font-size: 11px;
         margin-top: 2px;
+    }
+    
+    .rule {
+        margin-bottom: 8px;
+    }
+    
+    .rule-arrow {
+        font-size: 11px;
+        margin-right: 8px;
+    }
+    
+    .rule-text {
+        font-size: 11px;
     }
     
     .event-desc {

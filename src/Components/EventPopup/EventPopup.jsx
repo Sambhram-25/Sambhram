@@ -183,13 +183,10 @@ const EventPopup = () => {
                                         <h3>Rules</h3>
                                         <div className="rules">
                                             {getRules(eventObj).map((rule, index) => (
-                                                <div>
-                                                    <div className="rule">
-                                                      <p>&#10140;&nbsp;</p>  <p key={index}> {rule}</p>
-                                                    </div>
-
+                                                <div className="rule" key={index}>
+                                                    <span className="rule-arrow">➜</span>
+                                                    <span className="rule-text">{rule}</span>
                                                 </div>
-
                                             ))}
                                         </div>
                                         
