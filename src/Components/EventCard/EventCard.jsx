@@ -61,9 +61,12 @@ const EventCard = ({eventDatas}) => {
                                 <div className="event-card-content">
                                     <div className="card-front-top">
                                         <div className="event-card-names">
-                                            <p>{title}</p>
                                             {event.eventSubName && <p className='event-subname'>{event.eventSubName}</p>}
                                         </div>
+                                    </div>
+                                    {/* Move event title here, below the top section and above the Add Event button */}
+                                    <div className="event-title-below">
+                                        <h3 className="event-title-text">{title}</h3>
                                     </div>
                                     <div className="event-buttons">
                                         <button 

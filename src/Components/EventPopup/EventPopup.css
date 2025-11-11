@@ -98,7 +98,7 @@
 
 .event-time {
     font-weight: bold;
-    color: rgb(90, 2, 2);
+    color: #0066ff; /* Changed from red to blue */
 }
 
 .rule-box {

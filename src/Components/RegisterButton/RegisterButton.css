@@ -19,13 +19,13 @@
     align-items: center;
     border-radius: 15px;
     box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.311);
-    background-color: #540000ca;
+    background-color: #0066ffca; /* Changed from red (#540000ca) to blue */
     backdrop-filter: blur(10px);
 }
 
 .register-button:hover {
-    box-shadow: 0 0 20px 5px rgba(255, 2, 2, 0.311);
-    background-color: #370101ca;
+    box-shadow: 0 0 20px 5px rgba(0, 102, 255, 0.311); /* Changed from red to blue */
+    background-color: #0044ccca; /* Changed from red (#370101ca) to blue */
     backdrop-filter: blur(10px);
 }
 
@@ -60,7 +60,7 @@
     }
     
     .register-button:hover {
-        background: url("../../assets/bg-drag.jpg");
+        background: linear-gradient(90deg, #0066ff, #0033cc); /* Changed from image to blue gradient */
         background-size: cover;
         animation: moveBg 80s linear infinite;
     }
