@@ -29,8 +29,19 @@ const EventCard = ({eventDatas}) => {
         const size = event?.teamSize;
         if (!size) return false;
         const s = String(size).toLowerCase();
-        if (s.includes('team')) return true;
+        
+        // Check for specific team indicators
+        if (s.includes('individual')) return false;
+        if (s.includes('team') || s.includes('members') || s.includes('-')) return true;
+        
+        // Check for numbers greater than 1
         const nums = String(size).match(/\d+/g);
+        if (nums && nums.length >= 2) {
+            // For ranges, check if any number is greater than 1
+            return nums.some(num => Number(num) > 1);
+        }
+        
+        // For single numbers
         return nums ? Number(nums?.[0]) > 1 : false;
     };
 

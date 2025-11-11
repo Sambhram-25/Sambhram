@@ -74,6 +74,7 @@
     justify-content: center;
     align-items: center;
     min-height: 40px;
+    order: 1; /* Ensure title is above the button */
 }
 
 .event-title-text {
@@ -95,94 +96,9 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: auto; /* Push to bottom */
+    margin-top: auto;
     padding: 10px;
-}
-
-.event-card-names {
-    padding: 5px;
-    background-color: #00000061;
-}
-
-.event-card .front img {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%; /* Full height */
-    object-fit: cover; /* Cover the entire area */
-    object-position: center; /* Center the image */
-    transition: transform 1s ease;
-}
-
-.event-card .back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 4px;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: rotateY(180deg);
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    background-color: #0d1b2a;
-}
-
-.back-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    text-align: center;
-}
-
-.event-back-dec {
-    padding: 10px 15px;
-    background-color: #fefefe;
-    background-size: cover;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    max-width: 90%;
-    margin: 0 auto;
-}
-
-/* Added styles for the View Rules button on the back */
-.event-buttons-back {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 15px 0 0 0;
-}
-
-.event-buttons-back .view-rule-btn {
-    margin: 0;
-    width: 70%;
-}
-
-@media (max-width: 700px) {
-    .event-card {
-        width: 220px;
-        height: 310px;
-    }
-    
-    .card-front-top {
-        height: auto;
-    }
-    
-    .event-card .front img {
-        height: 100%;
-    }
-    
-    .event-title-text {
-        font-size: 16px;
-    }
+    order: 2; /* Ensure button is below the title */
 }
 
 .button-event {
@@ -254,6 +170,222 @@
     color: black;
     transform: scale(1.05);
     transition: transform 0.2s ease-in-out;
+}
+
+.button-event:hover {
+}
+
+.event-card-names {
+    padding: 5px;
+    background-color: #00000061;
+}
+
+.event-card .front img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%; /* Full height */
+    object-fit: cover; /* Cover the entire area */
+    object-position: center; /* Center the image */
+    transition: transform 1s ease;
+}
+
+.event-card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotateY(180deg);
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background-color: #0d1b2a;
+}
+
+.back-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+.event-back-dec {
+    padding: 10px 15px;
+    background-color: #fefefe;
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+/* Added styles for the View Rules button on the back */
+.event-buttons-back {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 15px 0 0 0;
+}
+
+.event-buttons-back .view-rule-btn {
+    margin: 0;
+    width: 70%;
+}
+
+/* Tablet Styles (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .card-container-events {
+        width: 230px;
+        height: 330px;
+        margin-bottom: 20px;
+    }
+    
+    .event-card {
+        margin-top: 30px;
+    }
+    
+    .event-card .front img {
+        height: 100%;
+    }
+    
+    .event-title-text {
+        font-size: 17px;
+    }
+    
+    .button-event {
+        padding: 10px 20px;
+        font-size: 11px;
+    }
+    
+    .view-rule-btn {
+        height: 32px;
+        font-size: 0.75rem;
+    }
+}
+
+/* Mobile Styles (up to 767px) */
+@media (max-width: 767px) {
+    .card-container-events {
+        width: 210px;
+        height: 300px;
+        margin-bottom: 18px;
+    }
+    
+    .event-card {
+        margin-top: 25px;
+    }
+    
+    .event-card .front img {
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .event-title-below {
+        padding: 8px 4px;
+        min-height: 35px;
+    }
+    
+    .event-title-text {
+        font-size: 15px;
+    }
+    
+    .event-buttons {
+        padding: 8px;
+    }
+    
+    .button-event {
+        padding: 10px 18px;
+        font-size: 10px;
+        width: 75%;
+    }
+    
+    .view-rule-btn {
+        height: 30px;
+        font-size: 0.7rem;
+        width: 75%;
+    }
+    
+    .event-back-dec {
+        padding: 8px 12px;
+    }
+}
+
+/* Small Mobile Styles (up to 480px) */
+@media (max-width: 480px) {
+    .card-container-events {
+        width: 190px;
+        height: 270px;
+        margin-bottom: 15px;
+    }
+    
+    .event-card {
+        margin-top: 20px;
+    }
+    
+    .event-title-below {
+        padding: 6px 3px;
+        min-height: 30px;
+    }
+    
+    .event-title-text {
+        font-size: 14px;
+    }
+    
+    .button-event {
+        padding: 8px 15px;
+        font-size: 9px;
+        width: 80%;
+    }
+    
+    .view-rule-btn {
+        height: 28px;
+        font-size: 0.65rem;
+        width: 80%;
+    }
+}
+
+/* Extra Small Mobile Styles (up to 360px) */
+@media (max-width: 360px) {
+    .card-container-events {
+        width: 170px;
+        height: 250px;
+        margin-bottom: 12px;
+    }
+    
+    .event-card {
+        margin-top: 18px;
+    }
+    
+    .event-title-below {
+        padding: 5px 2px;
+        min-height: 28px;
+    }
+    
+    .event-title-text {
+        font-size: 13px;
+    }
+    
+    .button-event {
+        padding: 7px 12px;
+        font-size: 8px;
+        width: 85%;
+    }
+    
+    .view-rule-btn {
+        height: 26px;
+        font-size: 0.6rem;
+        width: 85%;
+    }
 }
 
 /* From Uiverse.io by niat786 */ 

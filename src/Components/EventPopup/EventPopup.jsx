@@ -19,7 +19,15 @@ const EventPopup = () => {
         if (!size) return false;
         if (String(size).toLowerCase().includes('individual')) return false;
         if (String(size).toLowerCase().includes('team')) return true;
+        
+        // Check for ranges like "1-2 members"
         const nums = String(size).match(/\d+/g);
+        if (nums && nums.length >= 2) {
+            // For ranges, check if any number is greater than 1
+            return nums.some(num => Number(num) > 1);
+        }
+        
+        // For single numbers
         return nums ? Number(nums?.[0]) > 1 : false;
     };
     
@@ -32,7 +40,7 @@ const EventPopup = () => {
         if (title === "webverse") return { min: 2, max: 2 }; // 2 total including leader
         if (title === "line quest") return { min: 3, max: 5 }; // 3-5 total including leader
         if (title === "shark tank") return { min: 2, max: 4 }; // 2-4 total including leader
-        if (title === "dashing dashboards") return { min: 2, max: 2 }; // 2 total including leader
+        if (title === "dashing dashboards") return { min: 1, max: 2 }; // 1-2 total including leader (individual or team of 2)
         if (title === "aqua ignition") return { min: 2, max: 2 }; // 2 total including leader
         if (title === "flight embers") return { min: 2, max: 2 }; // 2 total including leader
         if (title === "protoview") return { min: 2, max: 4 }; // 2-4 total including leader
