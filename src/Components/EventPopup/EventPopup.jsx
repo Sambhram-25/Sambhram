@@ -28,7 +28,7 @@ const EventPopup = () => {
         const ts = e?.teamSize ? String(e.teamSize) : '';
         
         // Specific event mappings with min/max requirements (including team leader in count)
-        if (title === "eyes off! code on") return { min: 2, max: 2 }; // 2 total including leader
+        if (title === "eyes off! code on") return { min: 1, max: 2 }; // 1-2 total including leader
         if (title === "webverse") return { min: 2, max: 2 }; // 2 total including leader
         if (title === "line quest") return { min: 3, max: 5 }; // 3-5 total including leader
         if (title === "shark tank") return { min: 2, max: 4 }; // 2-4 total including leader
