@@ -23,37 +23,50 @@ const EventPopup = () => {
         return nums ? Number(nums?.[0]) > 1 : false;
     };
     
-    const parseMaxMembers = (e) => {
+    const parseTeamSizeRequirements = (e) => {
         const title = getTitle(e)?.toLowerCase();
         const ts = e?.teamSize ? String(e.teamSize) : '';
         
-        // Specific event mappings based on requirements and database
-        if (title === "eyes off! code on") return 1; // 1 additional member (2 total)
-        if (title === "webverse") return 1; // 1 additional member (2 total)
-        if (title === "line quest") return 4; // 4 additional members (5 total)
-        if (title === "shark tank") return 3; // 3 additional members (4 total)
-        if (title === "dashing dashboards") return 1; // 1 additional member (2 total)
-        if (title === "aqua ignition") return 1; // 1 additional member (2 total)
-        if (title === "flight embers") return 1; // 1 additional member (2 total)
-        if (title === "protoview") return 3; // 3 additional members (4 total)
-        if (title === "botfury") return 2; // 2 additional members (3 total)
-        if (title === "circuit craze") return 1; // 1 additional member (2 total)
-        if (title === "gerber battle") return 1; // 1 additional member (2 total)
+        // Specific event mappings with min/max requirements
+        if (title === "eyes off! code on") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
+        if (title === "webverse") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
+        if (title === "line quest") return { min: 3, max: 4 }; // 4-5 total (1 leader + 3-4 members)
+        if (title === "shark tank") return { min: 1, max: 3 }; // 2-4 total (1 leader + 1-3 members)
+        if (title === "dashing dashboards") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
+        if (title === "aqua ignition") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
+        if (title === "flight embers") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
+        if (title === "protoview") return { min: 1, max: 3 }; // 2-4 total (1 leader + 1-3 members)
+        if (title === "botfury") return { min: 1, max: 2 }; // 2-3 total (1 leader + 1-2 members)
+        if (title === "circuit craze") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
+        if (title === "gerber battle") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
         
-        // Parse from teamSize field
+        // Parse from teamSize field for min/max
         const nums = ts.match(/\d+/g);
-        if (nums && nums.length) {
-            // For ranges like "2-4 members", take the maximum
-            return Math.max(...nums.map(n => Number(n))) - 1; // Subtract 1 for leader
+        if (nums && nums.length >= 2) {
+            // For ranges like "2-4 members", first number is min, second is max
+            const min = Number(nums[0]) - 1; // Subtract 1 for leader
+            const max = Number(nums[1]) - 1; // Subtract 1 for leader
+            return { min, max };
+        } else if (nums && nums.length === 1) {
+            // For single number like "team of 2", min and max are the same
+            const count = Number(nums[0]) - 1; // Subtract 1 for leader
+            return { min: count, max: count };
         }
-        if (ts.toLowerCase().includes('team')) return 3; // Default for team events
-        return 0; // Individual events
+        
+        // Default for team events
+        if (ts.toLowerCase().includes('team')) return { min: 1, max: 3 };
+        
+        // Individual events
+        return { min: 0, max: 0 };
     };
 
     const id = getId(eventObj);
     const reg = eventRegistrations?.[id] || { leader: { name: "", email: "", phone: "", altPhone: "" }, members: [] };
-    const maxAdditional = parseMaxMembers(eventObj); // Maximum additional members
+    const teamRequirements = parseTeamSizeRequirements(eventObj);
+    const maxAdditional = teamRequirements.max; // Maximum additional members
+    const minAdditional = teamRequirements.min; // Minimum additional members
     const maxMembers = maxAdditional + 1; // Total team size (leader + members)
+    const minMembers = minAdditional + 1; // Minimum team size (leader + members)
 
     const updateReg = (next) => {
         setEventRegistrations(prev => ({ ...prev, [id]: next }));
@@ -97,6 +110,24 @@ const EventPopup = () => {
                 alert("Alternate phone (if provided) must be exactly 10 digits.");
                 return;
             }
+            
+            // Count filled members
+            const filledMembers = Array.isArray(reg.members) 
+                ? reg.members.filter(m => m?.name && m?.email).length 
+                : 0;
+            
+            // Validate minimum team size
+            if (filledMembers < minAdditional) {
+                alert(`This event requires at least ${minMembers} team members. Please add at least ${minAdditional - filledMembers} more member(s).`);
+                return;
+            }
+            
+            // Validate maximum team size
+            if (filledMembers > maxAdditional) {
+                alert(`This event allows a maximum of ${maxMembers} team members. Please remove ${filledMembers - maxAdditional} member(s).`);
+                return;
+            }
+            
             if (Array.isArray(reg.members)) {
                 for (const m of reg.members) {
                     if ((m?.name && !m?.email) || (!m?.name && m?.email)) {
@@ -189,7 +220,7 @@ const EventPopup = () => {
                                                     value={reg.leader?.altPhone || ""} 
                                                     onChange={(e) => handleLeaderChange('altPhone', e.target.value)} 
                                                 />
-                                                <h4>Team Members (up to {maxAdditional})</h4>
+                                                <h4>Team Members ({minAdditional > 0 ? `min ${minAdditional}, ` : ''}max {maxAdditional})</h4>
                                                 {Array.isArray(reg.members) && reg.members.map((m, idx) => (
                                                     <div key={idx} className="team-member-row">
                                                         <input 
@@ -219,6 +250,16 @@ const EventPopup = () => {
                                                     >
                                                         <i className="fa-solid fa-plus"></i> Add Member
                                                     </button>
+                                                )}
+                                                {Array.isArray(reg.members) && reg.members.length >= minAdditional && (
+                                                    <div className="team-form-note">
+                                                        <p><small><i className="fa-solid fa-check-circle" style={{color: '#4CAF50'}}></i> Minimum team size requirement met</small></p>
+                                                    </div>
+                                                )}
+                                                {Array.isArray(reg.members) && reg.members.length < minAdditional && minAdditional > 0 && (
+                                                    <div className="team-form-note">
+                                                        <p><small><i className="fa-solid fa-exclamation-triangle" style={{color: '#FFC107'}}></i> Minimum {minAdditional} team members required</small></p>
+                                                    </div>
                                                 )}
                                                 <div className="team-form-note">
                                                     <p><small><i className="fa-solid fa-info-circle"></i> Fields marked with * are required</small></p>
