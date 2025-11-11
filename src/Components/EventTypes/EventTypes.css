@@ -10,7 +10,7 @@
 .event-type{
     width: 200px;
     height: 200px;
-    border: 1px solid red;
+    border: 1px solid #0066ff;
     border-radius: 6px;
     display: flex;
     justify-content: center;

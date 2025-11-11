@@ -33,7 +33,7 @@ a {
   margin: auto;
 }
 .Toastify__toast {
-  background: rgba(69, 1, 1, 0.3); /* Semi-transparent background */
+  background: rgba(1, 1, 69, 0.3); /* Changed from red to blue - Semi-transparent background */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px); /* For Safari */
   color: white;

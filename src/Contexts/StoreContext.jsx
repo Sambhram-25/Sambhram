@@ -287,7 +287,7 @@ export const ContextProvider = ({ children }) => {
           "Shree Devi Institute Of Technology, Kenjar, Near Mangalore International Airport, Karnataka - 574142",
       },
       theme: {
-        color: "#580808",
+        color: "#0066ff",
       },
       modal: {
         ondismiss: () => toast.info("Payment cancelled"),
