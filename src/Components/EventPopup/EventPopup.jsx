@@ -327,7 +327,7 @@ const EventPopup = () => {
                                                         <i className="fa-solid fa-plus"></i> Add Member
                                                     </button>
                                                 )}
-                                                {Array.isArray(reg.members) && reg.members.length >= minAdditional && minAdditional > 0 && (
+                                                {Array.isArray(reg.members) && reg.members.length >= minAdditional && minAdditional > 0 && minMembers !== maxMembers && (
                                                     <div className="team-form-note">
                                                         <p><small><i className="fa-solid fa-check-circle" style={{color: '#4CAF50'}}></i> Team size requirement met ({minMembers}-{maxMembers} members)</small></p>
                                                     </div>

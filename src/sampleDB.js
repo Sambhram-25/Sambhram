@@ -8,13 +8,13 @@ export const eventsData = [
     image: "/eventcards/shark-tank.jpg",
     date: "Revealing Soon",
     time: "10:30 AM",
-    organizer: "Ms. Saakshi J Shetty",
+    organizer: "Ms. Saakshi Shetty",
     contact: "+91 9606469357",
     amount: "Varies",
     teamSize: "team",
     gradient: "from-purple-500 to-pink-600",
-    venue: "CL-303",
-    studentCoordinator: "Mr. Lohith Gowda (9019844009)",
+    venue: "EDUSAT",
+    studentCoordinator: "Ms. Saakshi Shetty (9606469357)",
     detailedRules: [
       "2 to 4 members make a team",
       "The pitch should be completed in 3-5 minutes, and the QnA with Judges in 5 minutes",
@@ -38,7 +38,7 @@ export const eventsData = [
     teamSize: "individual",
     gradient: "from-blue-500 to-cyan-600",
     venue: "CL-203",
-    studentCoordinator: "Ms. Sinchana P S (7483081046)",
+    studentCoordinator: "Mr. Thejash (8075773051)",
     detailedRules: [
       "It is an individual participation event",
       "Each round will be an elimination round.",
@@ -53,8 +53,8 @@ export const eventsData = [
     description: "Code in the dark and let your logic take the lead—beat the clock with raw skill and fearless focus.",
     image: "/eventcards/Eyesoff.jpg",
     date: "Revealing Soon",
-    time: "2:30 PM - 3:30 PM",
-    organizer: "Ms. Spoorthi B Shetty",
+    time: "2:00 PM",
+    organizer: "Ms. Spoorthi B",
     contact: "+91 9482906943",
     amount: "Varies",
     teamSize: "team",
@@ -78,7 +78,7 @@ export const eventsData = [
     description: "Design with precision, code with imagination. Create modern web experiences that redefine digital innovation!",
     image: "/eventcards/webverse.jpg",
     date: "Revealing Soon",
-    time: "10:30 AM - 1:30 PM",
+    time: "10:30 AM",
     organizer: "Ms. Deepthi",
     contact: "+91 9880501735",
     amount: "Varies",
@@ -102,12 +102,13 @@ export const eventsData = [
     description: "Race your robot to perfection! Build, code, and master a line-following bot that blends speed, precision, and smart control.",
     image: "/eventcards/linefollower.png",
     date: "Revealing Soon",
-    time: "Revealing Soon",
+    time: "10:00 AM",
     organizer: "Ms. Ankitha V Shetty",
     contact: "+91 8310866320",
     amount: "Varies",
     teamSize: "team",
     gradient: "from-orange-500 to-red-600",
+    venue: "FM Lab",
     studentCoordinator: "Ms. S B Poorvi (9353181551) & Apeksha (+91 77954 63069)",
     detailedRules: [
       "Each team must consist of 3–5 members.",
@@ -125,8 +126,8 @@ export const eventsData = [
     description: "Hunt bugs, squash errors, beat the timer—show off lightning-fast debugging skills!",
     image: "/eventcards/errrorelimination.jpg",
     date: "Revealing Soon",
-    time: "12:00 PM - 1:00 PM",
-    organizer: "Mrs. Latha S",
+    time: "12:00 PM",
+    organizer: "Ms. Latha K V",
     contact: "+91 9611095629",
     amount: "Varies",
     teamSize: "individual",
@@ -150,7 +151,7 @@ export const eventsData = [
     description: "Transform raw data into stunning visuals and spotlight your analytical flair with dashboards that wow!",
     image: "/eventcards/dashing-dashboard.jpg",
     date: "Revealing Soon",
-    time: "10:30 AM - 11:30 AM",
+    time: "10:30 AM",
     organizer: "Ms. Meenakshi",
     contact: "+91 8088994353",
     amount: "Varies",
@@ -200,7 +201,7 @@ export const eventsData = [
     description: "A thrilling, time-bound coding showdown where speed meets skill and only the sharpest minds conquer the clock!",
     image: "/eventcards/codewars.jpg",
     date: "Revealing Soon",
-    time: "3:30 PM - 4:30 PM",
+    time: "2:00 PM",
     organizer: "Mr. Savan Shetty",
     contact: "+91 6360841765",
     amount: "Varies",
@@ -208,7 +209,7 @@ export const eventsData = [
     gradient: "from-blue-600 to-indigo-700",
     venue: "ISE Lab",
     location: "1st Floor",
-    studentCoordinator: "Nihal S Kolambkar (7204196221)",
+    studentCoordinator: "Mr. Savan Shetty (6360841765)",
     detailedRules: [
       "Individual Participation.",
       "Languages Allowed: C, C++, Java, Python.",
@@ -643,7 +644,7 @@ export const eventsData = [
     description: "Present your idea to the world with confidence—your project could inspire the next big change!",
     image: "/eventcards/protoview.png",
     date: "Revealing Soon",
-    time: "Revealing Soon",
+    time: "11:00 AM",
     organizer: "Prof. Sheryl Iona Aiman",
     contact: "8197201536",
     amount: "Varies",
@@ -656,7 +657,7 @@ export const eventsData = [
       "Presentations must be between 8 and 10 minutes.",
       "Demonstrate a safe working model or prototype during evaluation."
     ],
-    venue: "Revealing Soon",
+    venue: "CL-002",
     location: "Main Expo Hall"
   },
   {
@@ -667,21 +668,21 @@ export const eventsData = [
     description: "Unleash the power of innovation on the field—the smartest bot takes the crown!",
     image: "/eventcards/botfury.png",
     date: "Revealing Soon",
-    time: "Revealing Soon",
+    time: "11:30 AM",
     organizer: "Prof. Deepa Kini",
     contact: "9886518868",
     amount: "Varies",
-    teamSize: "1-3 members",
+    teamSize: "2-3 members",
     gradient: "from-slate-600 to-blue-700",
     studentCoordinator: "Ms. Smitha S (8618657066)",
     detailedRules: [
-      "Teams can include a maximum of 3 members.",
+      "Teams must consist of 2-3 members.",
       "The same bot must be used throughout all matches.",
       "Bots can be wired or wireless but must stay within 300 x 300 x 300 mm and 5 kg.",
       "Operating voltage must never exceed 12V; no external AC supply will be provided.",
       "Only leak-proof batteries are permitted."
     ],
-    venue: "Revealing Soon",
+    venue: "Mechanical Lab",
     location: "Robotics Arena"
   },
   {
@@ -692,7 +693,7 @@ export const eventsData = [
     description: "Put your AI-assisted problem solving to the test in a rapid, device-first challenge.",
     image: "/eventcards/word2world.png",
     date: "Revealing Soon",
-    time: "Revealing Soon",
+    time: "11:30 AM",
     organizer: "Prof. Prafulla Shetty",
     contact: "7204549248",
     amount: "Varies",
@@ -705,7 +706,7 @@ export const eventsData = [
       "Internet connectivity must be arranged by the participant.",
       "AI tools to be used will be disclosed during the event."
     ],
-    venue: "Revealing Soon",
+    venue: "DSP Lab",
     location: "Innovation Hub"
   },
   {
@@ -716,7 +717,7 @@ export const eventsData = [
     description: "Build smart and powerful circuits that bring ideas to life—show how strong your hardware skills really are!",
     image: "/eventcards/iot-league.png",
     date: "Revealing Soon",
-    time: "Revealing Soon",
+    time: "2:00 PM",
     organizer: "Prof. Ashwini P",
     contact: "9743079974",
     amount: "Varies",
@@ -730,8 +731,8 @@ export const eventsData = [
       "External components or modules are strictly prohibited.",
       "Create and demonstrate a functional circuit within the allotted time."
     ],
-    venue: "Revealing Soon",
-    location: "IoT Lab"
+    venue: "CAED Lab",
+    location: "Basement"
   },
   {
     id: 32,
@@ -741,7 +742,7 @@ export const eventsData = [
     description: "Where circuits meet creativity—design sleek, efficient PCBs that spark innovation.",
     image: "/eventcards/gerber-battle.png",
     date: "Revealing Soon",
-    time: "Revealing Soon",
+    time: "10:30 AM",
     organizer: "Prof. Diana D'Souza",
     contact: "7795604890",
     amount: "Varies",
@@ -755,8 +756,8 @@ export const eventsData = [
       "Submit a design free from DRC errors.",
       "Bring a laptop with KiCad, OrCAD, or equivalent PCB software pre-installed."
     ],
-    venue: "Revealing Soon",
-    location: "PCB Studio"
+    venue: "HDL Lab",
+    location: "Basement"
   },
   {
     id: 33,
@@ -766,7 +767,7 @@ export const eventsData = [
     description: "Showcase your CAD creativity and compete for top rewards!",
     image: "/eventcards/luminary-designs.png",
     date: "Day 1",
-    time: "11:00 AM",
+    time: "1:30 PM",
     organizer: "Prof. Harsha G O",
     contact: "9731020393",
     amount: "Varies",
@@ -780,8 +781,8 @@ export const eventsData = [
       "Event computers are available; participants may alternatively bring their own laptops.",
       "Required materials: pen, printout sheets, projector access, PC, writing pad."
     ],
-    venue: "2nd Floor CS Lab (Canteen Building)",
-    location: "Lab 2.04"
+    venue: "PG Building",
+    location: "3rd floor"
   },
   {
     id: 34,
@@ -791,7 +792,7 @@ export const eventsData = [
     description: "Build, launch, and race your water rocket to victory!",
     image: "/eventcards/aqua-ignition.png",
     date: "Day 1",
-    time: "03:30 PM",
+    time: "12:00 PM",
     organizer: "Prof. Mohammed Hashim",
     contact: "9061293705",
     amount: "Varies",
@@ -805,7 +806,7 @@ export const eventsData = [
       "Participants must bring 2-liter bottles for rocket construction.",
       "Carry pen, A4 sheets, and a writing pad for calculations and notes."
     ],
-    venue: "Near Workshop",
+    venue: "Aerodynamic lab",
     location: "Launch Grounds"
   },
   {
@@ -816,7 +817,7 @@ export const eventsData = [
     description: "Analyze, evaluate, and present your investigation under pressure!",
     image: "/eventcards/flight-embers.png",
     date: "Day 1",
-    time: "02:00 PM",
+    time: "11:00 AM",
     organizer: "Prof. Augustine",
     contact: "9945471975",
     amount: "Approx. Prize: ₹4500",
@@ -830,7 +831,7 @@ export const eventsData = [
       "Round 3: Solve an aviation scenario and present an investigative report.",
       "Bring pen, A4 sheets, and a writing pad; miscellaneous expenses ₹800."
     ],
-    venue: "2nd Floor, Room 201 (Canteen Building)",
+    venue: "CL-102",
     location: "Aero Briefing Room"
   }
 ];
