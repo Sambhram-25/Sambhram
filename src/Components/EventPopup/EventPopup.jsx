@@ -61,7 +61,11 @@ const EventPopup = () => {
     };
 
     const id = getId(eventObj);
-    const reg = eventRegistrations?.[id] || { leader: { name: "", email: "", phone: "", altPhone: "" }, members: [] };
+    const reg = eventRegistrations?.[id] || { 
+        teamName: "", 
+        leader: { name: "", email: "", phone: "", altPhone: "" }, 
+        members: [] 
+    };
     const teamRequirements = parseTeamSizeRequirements(eventObj);
     const maxAdditional = teamRequirements.max > 0 ? teamRequirements.max - 1 : 0; // Maximum additional members (excluding leader)
     const minAdditional = teamRequirements.min > 0 ? teamRequirements.min - 1 : 0; // Minimum additional members (excluding leader)
@@ -74,6 +78,10 @@ const EventPopup = () => {
 
     const handleLeaderChange = (field, value) => {
         updateReg({ ...reg, leader: { ...(reg.leader || {}), [field]: value } });
+    };
+
+    const handleTeamNameChange = (e) => {
+        updateReg({ ...reg, teamName: e.target.value });
     };
 
     const updateMember = (index, field, value) => {
@@ -102,6 +110,10 @@ const EventPopup = () => {
 
     const handleSubmitAdd = () => {
         if (isTeamEvent(eventObj)) {
+            if (!reg.teamName) {
+                alert("Please enter a team name.");
+                return;
+            }
             if (!reg.leader?.name || !reg.leader?.email || !reg.leader?.phone) {
                 alert("Please fill all required team leader details (Name, Email, and Phone).");
                 return;
@@ -208,6 +220,12 @@ const EventPopup = () => {
                                             <div className="team-form-content">
                                                 <input 
                                                     type="text" 
+                                                    placeholder="Team Name *" 
+                                                    value={reg.teamName || ""} 
+                                                    onChange={handleTeamNameChange} 
+                                                />
+                                                <input 
+                                                    type="text" 
                                                     placeholder="Team Leader Name *" 
                                                     value={reg.leader?.name || ""} 
                                                     onChange={(e) => handleLeaderChange('name', e.target.value)} 
@@ -278,30 +296,13 @@ const EventPopup = () => {
                                         </div>
                                     </>
                                 )}
-
-                                <div className="coordinator-details">
-                                    <div className="item-flex-popup">
-                                        <p className="event-time">{eventObj.time}</p>
-                                        <p className="event-time">{eventObj.date}</p>
-                                    </div>
-                                    <div className="item-flex-popup">
-                                        <p>Venue</p><p>{eventObj.venue}</p>
-                                    </div>
-
-
-
-                                    <div className="item-flex-popup">
-                                        <p>{eventObj.studentCoordinator}</p><p>{eventObj.studentCoordinatorContact}</p>
-                                    </div>
-                                    </div>
-                                    {selectedEvent.includes(getId(eventObj)) ? (
-                                        <button className='event-selected-button' onClick={() => selectEvent(getId(eventObj))}>Added</button>
-                                    ) : (
-                                        mode === 'add' ? (
-                                            <button className='event-select-button' onClick={handleSubmitAdd}>Add to Cart</button>
-                                        ) : null
-                                    )}
-                                
+                                {selectedEvent.includes(getId(eventObj)) ? (
+                                    <button className='event-selected-button' onClick={() => selectEvent(getId(eventObj))}>Added</button>
+                                ) : (
+                                    mode === 'add' ? (
+                                        <button className='event-select-button' onClick={handleSubmitAdd}>Add to Cart</button>
+                                    ) : null
+                                )}
                             </>
                         ) : (
                             <p>No event selected.</p>
