@@ -112,20 +112,25 @@ const EventPopup = () => {
             }
             
             // Count filled members (including team leader)
-            const filledMembers = (reg.leader?.name && reg.leader?.email ? 1 : 0) + 
-                (Array.isArray(reg.members) 
-                    ? reg.members.filter(m => m?.name && m?.email).length 
-                    : 0);
+            const leaderFilled = reg.leader?.name && reg.leader?.email ? 1 : 0;
+            const membersFilled = Array.isArray(reg.members) 
+                ? reg.members.filter(m => m?.name && m?.email).length 
+                : 0;
+            const filledMembers = leaderFilled + membersFilled;
             
             // Validate minimum team size (including team leader)
             if (filledMembers < minMembers) {
-                alert(`This event requires at least ${minMembers} team members (including leader). Please add at least ${minMembers - filledMembers - (reg.leader?.name && reg.leader?.email ? 1 : 0)} more member(s).`);
+                // If only leader is filled, we need (minMembers - 1) additional members
+                // If leader and some members are filled, we need (minMembers - filledMembers) additional members
+                const neededMembers = minMembers - filledMembers;
+                alert(`This event requires ${minMembers}-${maxMembers} team members. Please add at least ${neededMembers} more member(s).`);
                 return;
             }
             
             // Validate maximum team size (including team leader)
             if (filledMembers > maxMembers) {
-                alert(`This event allows a maximum of ${maxMembers} team members (including leader). Please remove ${filledMembers - maxMembers} member(s).`);
+                const excessMembers = filledMembers - maxMembers;
+                alert(`This event allows a maximum of ${maxMembers} team members. Please remove ${excessMembers} member(s).`);
                 return;
             }
             
@@ -221,7 +226,7 @@ const EventPopup = () => {
                                                     value={reg.leader?.altPhone || ""} 
                                                     onChange={(e) => handleLeaderChange('altPhone', e.target.value)} 
                                                 />
-                                                <h4>Team Members ({minAdditional > 0 ? `min ${minAdditional}, ` : ''}max {maxAdditional})</h4>
+                                                <h4>Team Members ({minMembers}-{maxMembers} members total)</h4>
                                                 {Array.isArray(reg.members) && reg.members.map((m, idx) => (
                                                     <div key={idx} className="team-member-row">
                                                         <input 
@@ -254,12 +259,12 @@ const EventPopup = () => {
                                                 )}
                                                 {Array.isArray(reg.members) && reg.members.length >= minAdditional && minAdditional > 0 && (
                                                     <div className="team-form-note">
-                                                        <p><small><i className="fa-solid fa-check-circle" style={{color: '#4CAF50'}}></i> Minimum team size requirement met</small></p>
+                                                        <p><small><i className="fa-solid fa-check-circle" style={{color: '#4CAF50'}}></i> Team size requirement met ({minMembers}-{maxMembers} members)</small></p>
                                                     </div>
                                                 )}
                                                 {Array.isArray(reg.members) && reg.members.length < minAdditional && minAdditional > 0 && (
                                                     <div className="team-form-note">
-                                                        <p><small><i className="fa-solid fa-exclamation-triangle" style={{color: '#FFC107'}}></i> Minimum {minMembers} team members required (including leader)</small></p>
+                                                        <p><small><i className="fa-solid fa-exclamation-triangle" style={{color: '#FFC107'}}></i> Requires {minMembers}-{maxMembers} team members</small></p>
                                                     </div>
                                                 )}
                                                 <div className="team-form-note">
