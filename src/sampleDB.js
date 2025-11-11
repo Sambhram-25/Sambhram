@@ -103,7 +103,7 @@ export const eventsData = [
     image: "/eventcards/linefollower.png",
     date: "Revealing Soon",
     time: "Revealing Soon",
-    organizer: "Ms. Ankitha Shetty",
+    organizer: "Ms. Ankitha V Shetty",
     contact: "+91 8310866320",
     amount: "Varies",
     teamSize: "team",
@@ -133,7 +133,7 @@ export const eventsData = [
     gradient: "from-red-500 to-pink-600",
     venue: "ISE Lab",
     location: "1st Floor",
-    studentCoordinator: "Ms. Preethishree S D (8618010509)",
+    studentCoordinator: "Ankitha S A (8591845188)",
     detailedRules: [
       "Individual Participation",
       "Languages Allowed: C and Python",
