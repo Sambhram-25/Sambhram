@@ -1,6 +1,6 @@
 import './EventPopup.css'
 import { StoreContext } from '../../Contexts/StoreContext';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 const EventPopup = () => {
     const { setPopUpStatus, popUpStatus, selectEvent, selectedEvent, eventRegistrations, setEventRegistrations } = useContext(StoreContext);
@@ -80,8 +80,89 @@ const EventPopup = () => {
     const maxMembers = teamRequirements.max; // Total team size (including leader)
     const minMembers = teamRequirements.min; // Minimum team size (including leader)
 
+    // Effect to validate team registration when popup opens
+    useEffect(() => {
+        if (popUpStatus && mode === 'add' && isTeamEvent(eventObj) && selectedEvent.includes(id)) {
+            const isValid = validateTeamRegistration(reg, minMembers, maxMembers);
+            if (!isValid) {
+                // If validation fails, remove the event from selectedEvent
+                selectEvent(id);
+            }
+        }
+    }, [popUpStatus, mode, eventObj, selectedEvent, id, reg, minMembers, maxMembers]);
+
+    const validateTeamRegistration = (registrationData, minMembers, maxMembers) => {
+        // Skip validation if this is not a team event
+        if (!isTeamEvent(eventObj)) return true;
+        
+        const { teamName, leader, members = [] } = registrationData;
+        
+        // Check if team name is required and provided
+        if (!teamName && minMembers > 1) {
+            return false;
+        }
+        
+        // Check if leader details are required and provided
+        if (minMembers > 0) {
+            if (!leader?.name || !leader?.email || !leader?.phone) {
+                return false;
+            }
+            
+            // Validate phone number format
+            if (!/^\d{10}$/.test(String(leader.phone))) {
+                return false;
+            }
+            
+            // Validate alternate phone number format if provided
+            if (leader.altPhone && !/^\d{10}$/.test(String(leader.altPhone))) {
+                return false;
+            }
+        }
+        
+        // Count filled members (including team leader)
+        const leaderFilled = leader?.name && leader?.email && leader?.phone ? 1 : 0;
+        const membersFilled = Array.isArray(members) 
+            ? members.filter(m => m?.name && m?.email).length 
+            : 0;
+        const filledMembers = leaderFilled + membersFilled;
+        
+        // Validate minimum team size (including team leader)
+        if (filledMembers < minMembers) {
+            return false;
+        }
+        
+        // Validate maximum team size (including team leader)
+        if (filledMembers > maxMembers) {
+            return false;
+        }
+        
+        // Validate each member has both name and email or both are empty
+        if (Array.isArray(members)) {
+            for (const m of members) {
+                if ((m?.name && !m?.email) || (!m?.name && m?.email)) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    };
+
     const updateReg = (next) => {
-        setEventRegistrations(prev => ({ ...prev, [id]: next }));
+        setEventRegistrations(prev => {
+            const newRegistrations = { ...prev, [id]: next };
+            
+            // Validate the registration data whenever it changes
+            if (isTeamEvent(eventObj) && selectedEvent.includes(id)) {
+                const isValid = validateTeamRegistration(next, minMembers, maxMembers);
+                if (!isValid) {
+                    // If validation fails, remove the event from selectedEvent
+                    selectEvent(id);
+                }
+            }
+            
+            return newRegistrations;
+        });
     };
 
     const handleLeaderChange = (field, value) => {
@@ -118,53 +199,11 @@ const EventPopup = () => {
 
     const handleSubmitAdd = () => {
         if (isTeamEvent(eventObj)) {
-            if (!reg.teamName) {
-                alert("Please enter a team name.");
+            const isValid = validateTeamRegistration(reg, minMembers, maxMembers);
+            if (!isValid) {
+                // The validation function already shows alerts for specific errors
+                // Just return without adding the event
                 return;
-            }
-            if (!reg.leader?.name || !reg.leader?.email || !reg.leader?.phone) {
-                alert("Please fill all required team leader details (Name, Email, and Phone).");
-                return;
-            }
-            if (!/^\d{10}$/.test(String(reg.leader.phone))) {
-                alert("Team leader phone must be exactly 10 digits.");
-                return;
-            }
-            if (reg.leader.altPhone && !/^\d{10}$/.test(String(reg.leader.altPhone))) {
-                alert("Alternate phone (if provided) must be exactly 10 digits.");
-                return;
-            }
-            
-            // Count filled members (including team leader)
-            const leaderFilled = reg.leader?.name && reg.leader?.email ? 1 : 0;
-            const membersFilled = Array.isArray(reg.members) 
-                ? reg.members.filter(m => m?.name && m?.email).length 
-                : 0;
-            const filledMembers = leaderFilled + membersFilled;
-            
-            // Validate minimum team size (including team leader)
-            if (filledMembers < minMembers) {
-                // If only leader is filled, we need (minMembers - 1) additional members
-                // If leader and some members are filled, we need (minMembers - filledMembers) additional members
-                const neededMembers = minMembers - filledMembers;
-                alert(`This event requires at least ${minMembers} team members. Please add at least ${neededMembers} more member(s).`);
-                return;
-            }
-            
-            // Validate maximum team size (including team leader)
-            if (filledMembers > maxMembers) {
-                const excessMembers = filledMembers - maxMembers;
-                alert(`This event allows a maximum of ${maxMembers} team members. Please remove ${excessMembers} member(s).`);
-                return;
-            }
-            
-            if (Array.isArray(reg.members)) {
-                for (const m of reg.members) {
-                    if ((m?.name && !m?.email) || (!m?.name && m?.email)) {
-                        alert("Each team member must have both name and email, or leave both fields empty.");
-                        return;
-                    }
-                }
             }
         }
         selectEvent(id);
@@ -253,7 +292,11 @@ const EventPopup = () => {
                                                     value={reg.leader?.altPhone || ""} 
                                                     onChange={(e) => handleLeaderChange('altPhone', e.target.value)} 
                                                 />
-                                                <h4>Team Members ({minMembers}-{maxMembers} members total)</h4>
+                                                <h4>
+                                                    {minMembers === maxMembers 
+                                                        ? `Teams must consist of exactly ${minMembers} members.` 
+                                                        : `Team Members (${minMembers}-${maxMembers} members total)`}
+                                                </h4>
                                                 {Array.isArray(reg.members) && reg.members.map((m, idx) => (
                                                     <div key={idx} className="team-member-row">
                                                         <input 
