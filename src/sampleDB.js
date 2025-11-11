@@ -14,6 +14,7 @@ export const eventsData = [
     teamSize: "team",
     gradient: "from-purple-500 to-pink-600",
     venue: "EDUSAT",
+    location: "Main Auditorium",
     studentCoordinator: "Ms. Saakshi Shetty (9606469357)",
     detailedRules: [
       "2 to 4 members make a team",
@@ -38,6 +39,7 @@ export const eventsData = [
     teamSize: "individual",
     gradient: "from-blue-500 to-cyan-600",
     venue: "CL-203",
+    location: "2nd Floor",
     studentCoordinator: "Mr. Thejash (8075773051)",
     detailedRules: [
       "It is an individual participation event",
@@ -109,6 +111,7 @@ export const eventsData = [
     teamSize: "team",
     gradient: "from-orange-500 to-red-600",
     venue: "FM Lab",
+    location: "1st Floor",
     studentCoordinator: "Ms. S B Poorvi (9353181551) & Apeksha (+91 77954 63069)",
     detailedRules: [
       "Each team must consist of 3–5 members.",
