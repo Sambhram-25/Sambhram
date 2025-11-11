@@ -27,46 +27,46 @@ const EventPopup = () => {
         const title = getTitle(e)?.toLowerCase();
         const ts = e?.teamSize ? String(e.teamSize) : '';
         
-        // Specific event mappings with min/max requirements
-        if (title === "eyes off! code on") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
-        if (title === "webverse") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
-        if (title === "line quest") return { min: 3, max: 4 }; // 4-5 total (1 leader + 3-4 members)
-        if (title === "shark tank") return { min: 1, max: 3 }; // 2-4 total (1 leader + 1-3 members)
-        if (title === "dashing dashboards") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
-        if (title === "aqua ignition") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
-        if (title === "flight embers") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
-        if (title === "protoview") return { min: 1, max: 3 }; // 2-4 total (1 leader + 1-3 members)
-        if (title === "botfury") return { min: 1, max: 2 }; // 2-3 total (1 leader + 1-2 members)
-        if (title === "circuit craze") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
-        if (title === "gerber battle") return { min: 1, max: 1 }; // 2 total (1 leader + 1 member)
+        // Specific event mappings with min/max requirements (including team leader in count)
+        if (title === "eyes off! code on") return { min: 2, max: 2 }; // 2 total including leader
+        if (title === "webverse") return { min: 2, max: 2 }; // 2 total including leader
+        if (title === "line quest") return { min: 3, max: 5 }; // 3-5 total including leader
+        if (title === "shark tank") return { min: 2, max: 4 }; // 2-4 total including leader
+        if (title === "dashing dashboards") return { min: 2, max: 2 }; // 2 total including leader
+        if (title === "aqua ignition") return { min: 2, max: 2 }; // 2 total including leader
+        if (title === "flight embers") return { min: 2, max: 2 }; // 2 total including leader
+        if (title === "protoview") return { min: 2, max: 4 }; // 2-4 total including leader
+        if (title === "botfury") return { min: 2, max: 3 }; // 2-3 total including leader
+        if (title === "circuit craze") return { min: 2, max: 2 }; // 2 total including leader
+        if (title === "gerber battle") return { min: 1, max: 2 }; // 1-2 total including leader (can be individual or team)
         
-        // Parse from teamSize field for min/max
+        // Parse from teamSize field for min/max (including team leader in count)
         const nums = ts.match(/\d+/g);
         if (nums && nums.length >= 2) {
-            // For ranges like "2-4 members", first number is min, second is max
-            const min = Number(nums[0]) - 1; // Subtract 1 for leader
-            const max = Number(nums[1]) - 1; // Subtract 1 for leader
+            // For ranges like "2-4 members", first number is min, second is max (including leader)
+            const min = Number(nums[0]);
+            const max = Number(nums[1]);
             return { min, max };
         } else if (nums && nums.length === 1) {
-            // For single number like "team of 2", min and max are the same
-            const count = Number(nums[0]) - 1; // Subtract 1 for leader
+            // For single number like "team of 2", min and max are the same (including leader)
+            const count = Number(nums[0]);
             return { min: count, max: count };
         }
         
         // Default for team events
-        if (ts.toLowerCase().includes('team')) return { min: 1, max: 3 };
+        if (ts.toLowerCase().includes('team')) return { min: 2, max: 4 };
         
         // Individual events
-        return { min: 0, max: 0 };
+        return { min: 1, max: 1 };
     };
 
     const id = getId(eventObj);
     const reg = eventRegistrations?.[id] || { leader: { name: "", email: "", phone: "", altPhone: "" }, members: [] };
     const teamRequirements = parseTeamSizeRequirements(eventObj);
-    const maxAdditional = teamRequirements.max; // Maximum additional members
-    const minAdditional = teamRequirements.min; // Minimum additional members
-    const maxMembers = maxAdditional + 1; // Total team size (leader + members)
-    const minMembers = minAdditional + 1; // Minimum team size (leader + members)
+    const maxAdditional = teamRequirements.max > 0 ? teamRequirements.max - 1 : 0; // Maximum additional members (excluding leader)
+    const minAdditional = teamRequirements.min > 0 ? teamRequirements.min - 1 : 0; // Minimum additional members (excluding leader)
+    const maxMembers = teamRequirements.max; // Total team size (including leader)
+    const minMembers = teamRequirements.min; // Minimum team size (including leader)
 
     const updateReg = (next) => {
         setEventRegistrations(prev => ({ ...prev, [id]: next }));
@@ -111,20 +111,21 @@ const EventPopup = () => {
                 return;
             }
             
-            // Count filled members
-            const filledMembers = Array.isArray(reg.members) 
-                ? reg.members.filter(m => m?.name && m?.email).length 
-                : 0;
+            // Count filled members (including team leader)
+            const filledMembers = (reg.leader?.name && reg.leader?.email ? 1 : 0) + 
+                (Array.isArray(reg.members) 
+                    ? reg.members.filter(m => m?.name && m?.email).length 
+                    : 0);
             
-            // Validate minimum team size
-            if (filledMembers < minAdditional) {
-                alert(`This event requires at least ${minMembers} team members. Please add at least ${minAdditional - filledMembers} more member(s).`);
+            // Validate minimum team size (including team leader)
+            if (filledMembers < minMembers) {
+                alert(`This event requires at least ${minMembers} team members (including leader). Please add at least ${minMembers - filledMembers - (reg.leader?.name && reg.leader?.email ? 1 : 0)} more member(s).`);
                 return;
             }
             
-            // Validate maximum team size
-            if (filledMembers > maxAdditional) {
-                alert(`This event allows a maximum of ${maxMembers} team members. Please remove ${filledMembers - maxAdditional} member(s).`);
+            // Validate maximum team size (including team leader)
+            if (filledMembers > maxMembers) {
+                alert(`This event allows a maximum of ${maxMembers} team members (including leader). Please remove ${filledMembers - maxMembers} member(s).`);
                 return;
             }
             
@@ -251,14 +252,14 @@ const EventPopup = () => {
                                                         <i className="fa-solid fa-plus"></i> Add Member
                                                     </button>
                                                 )}
-                                                {Array.isArray(reg.members) && reg.members.length >= minAdditional && (
+                                                {Array.isArray(reg.members) && reg.members.length >= minAdditional && minAdditional > 0 && (
                                                     <div className="team-form-note">
                                                         <p><small><i className="fa-solid fa-check-circle" style={{color: '#4CAF50'}}></i> Minimum team size requirement met</small></p>
                                                     </div>
                                                 )}
                                                 {Array.isArray(reg.members) && reg.members.length < minAdditional && minAdditional > 0 && (
                                                     <div className="team-form-note">
-                                                        <p><small><i className="fa-solid fa-exclamation-triangle" style={{color: '#FFC107'}}></i> Minimum {minAdditional} team members required</small></p>
+                                                        <p><small><i className="fa-solid fa-exclamation-triangle" style={{color: '#FFC107'}}></i> Minimum {minMembers} team members required (including leader)</small></p>
                                                     </div>
                                                 )}
                                                 <div className="team-form-note">
