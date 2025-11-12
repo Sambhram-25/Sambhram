@@ -249,9 +249,11 @@ const EventPopup = () => {
     return (
         <div key={getId(eventObj)} onClick={() => setPopUpStatus('')} className={`event-popup-container ${popUpStatus ? 'show' : ''}`}>
             <div className="event-popup" onClick={(e) => e.stopPropagation()}>
-            <img src="/bg-Cultural-phone.jpg" alt="" />
+                <div className="event-popup-bg">
+                    <img src="/bg-Cultural-phone.jpg" alt="" />
+                </div>
                 <div className="close-icon">
-                    <i onClick={() => setPopUpStatus('')} className="fa-solid fa-xmark fa-xl" style={{ color: '#ffffff' }}></i>
+                    <i onClick={(e) => { e.stopPropagation(); setPopUpStatus(''); }} className="fa-solid fa-xmark fa-xl" style={{ color: '#ffffff' }}></i>
                 </div> 
                 <div className="event-content">
                     <div className='pop-main'>
@@ -287,6 +289,28 @@ const EventPopup = () => {
                                                         : eventObj.date || eventObj.time || "Revealing soon"}
                                                 </p>
                                             </div>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {/* Faculty and Student Coordinator information - placed in one container */}
+                                {(eventObj.organizer || eventObj.studentCoordinator) && mode === 'rules' && (
+                                    <div className="coordinator-container">
+                                        <h3>Event Coordinators</h3>
+                                        <div className="coordinator-content">
+                                            {eventObj.organizer && (
+                                                <div className="coordinator-item">
+                                                    <p className="coordinator-label">Faculty Coordinator:</p>
+                                                    <p className="coordinator-value">{eventObj.organizer}</p>
+                                                    {eventObj.contact && <p className="coordinator-contact">Contact: {eventObj.contact}</p>}
+                                                </div>
+                                            )}
+                                            {eventObj.studentCoordinator && (
+                                                <div className="coordinator-item">
+                                                    <p className="coordinator-label">Student Coordinator:</p>
+                                                    <p className="coordinator-value">{eventObj.studentCoordinator}</p>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 )}

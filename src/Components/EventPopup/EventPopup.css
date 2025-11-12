@@ -22,38 +22,53 @@
 
 .event-popup {
     margin-top: 20px;
-    height: 650px;
-    width: 500px;
+    height: 750px;
+    width: 600px;
     border-radius: 15px;
-    background-color: #0066ff;
+    background-color: #0066ff; /* Blue background */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Changed from center to flex-start */
+    justify-content: flex-start;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: relative;
     opacity: 1;
     backdrop-filter: blur(10px);
-    overflow-y: auto; /* Changed from hidden to auto */
-    overflow-x: hidden;
+    overflow: hidden; /* Contain scrolling */
     color: aliceblue;
 }
-.event-popup img {
+
+/* Fixed background container */
+.event-popup-bg {
     position: absolute;
-    object-fit: fill;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.3; /* Reduced from 0.9 to make blue background more visible */
 }
 
-.item-flex-popup {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.event-popup-bg img {
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
 }
-.item-flex-popup p{
-    font-size: 13px;
+
+/* Scrollable content container */
+.event-content {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Changed to flex-start to prevent cutting */
+    flex: 1;
+    overflow-y: auto; /* Make content scrollable */
+    overflow-x: hidden;
+    z-index: 1; /* Ensure content is above background */
+    position: relative;
+    padding-top: 20px; /* Add padding to prevent cutting */
+    padding-bottom: 20px; /* Add padding to prevent cutting */
 }
 
 .event-name {
@@ -64,46 +79,13 @@
     font-weight: 600;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     width: 100%;
-}
-
-.event-desc {
-    margin-top: 10px;
-    font-size: 13px;
-    text-align: center;
-    width: 100%;
-}
-
-.event-content{
-    width: 100%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-}
-
-.coordinator-details {
-    background-color: rgba(254, 254, 254, 0.244);
-    margin-top: 10px;
-    border-radius: 10px;
-    box-shadow: 1px 1px 1px rgb(0,0,0,0.3);
-    width: 90%;
-    height: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.event-time {
-    font-weight: bold;
-    color: #0066ff; /* Changed from red to blue */
+    padding: 0 10px; /* Add padding to prevent cutting */
 }
 
 .rule-box {
     margin-top: 1px;
-    padding: 5px 10px;
+    padding: 15px 15px 25px 15px; /* Increased bottom padding to prevent cutting */
+    width: 100%; /* Ensure full width */
 }
 
 .rules {
@@ -115,6 +97,7 @@
     align-items: flex-start;
     margin-bottom: 10px;
     line-height: 1.4;
+    padding: 0 5px; /* Add padding to prevent cutting */
 }
 
 .rule-arrow {
@@ -527,7 +510,7 @@ input[type=number] {
     .event-popup {
         margin-top: 30px;
         width: 95%; /* Increased from 90% */
-        height: 550px; /* Increased from 450px */
+        height: 650px; /* Increased from 550px */
         overflow-y: auto; /* Ensure scrolling on mobile */
     }
     
@@ -655,5 +638,93 @@ input[type=number] {
         padding: 8px;
         font-size: 12px;
         margin: 6px 0;
+    }
+}
+
+/* Coordinator information styles - both coordinators in one container */
+.coordinator-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.coordinator-container h3 {
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.coordinator-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.coordinator-item {
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.coordinator-item:last-child {
+    margin-bottom: 0;
+}
+
+.coordinator-label {
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 5px 0;
+    font-size: 14px;
+}
+
+.coordinator-value {
+    color: #ffffff;
+    margin: 0;
+    font-size: 13px;
+}
+
+.coordinator-contact {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 3px 0 0 0;
+    font-size: 12px;
+}
+
+/* Mobile styles for coordinator container */
+@media (max-width: 700px) {
+    .coordinator-container {
+        width: 95%;
+        margin: 15px auto;
+        padding: 12px;
+    }
+    
+    .coordinator-container h3 {
+        font-size: 15px;
+        margin: 0 0 12px 0;
+    }
+    
+    .coordinator-content {
+        gap: 12px;
+    }
+    
+    .coordinator-item {
+        padding: 12px;
+    }
+    
+    .coordinator-label {
+        font-size: 13px;
+    }
+    
+    .coordinator-value {
+        font-size: 12px;
+    }
+    
+    .coordinator-contact {
+        font-size: 11px;
     }
 }
