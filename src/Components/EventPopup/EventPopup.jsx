@@ -1,6 +1,7 @@
 import './EventPopup.css'
 import { StoreContext } from '../../Contexts/StoreContext';
 import React, { useContext, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const EventPopup = () => {
     const { setPopUpStatus, popUpStatus, selectEvent, selectedEvent, eventRegistrations, setEventRegistrations } = useContext(StoreContext);
@@ -99,22 +100,43 @@ const EventPopup = () => {
         
         // Check if team name is required and provided
         if (!teamName && minMembers > 1) {
+            toast.error("Please enter a team name");
             return false;
         }
         
         // Check if leader details are required and provided
         if (minMembers > 0) {
-            if (!leader?.name || !leader?.email || !leader?.phone) {
+            if (!leader?.name) {
+                toast.error("Please enter team leader name");
                 return false;
             }
             
-            // Validate phone number format
+            if (!leader?.email) {
+                toast.error("Please enter team leader email");
+                return false;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(leader.email)) {
+                toast.error("Please enter a valid email address for team leader");
+                return false;
+            }
+            
+            if (!leader?.phone) {
+                toast.error("Please enter team leader phone number");
+                return false;
+            }
+            
+            // Validate phone number format (10 digits)
             if (!/^\d{10}$/.test(String(leader.phone))) {
+                toast.error("Please enter a valid 10-digit phone number for team leader");
                 return false;
             }
             
             // Validate alternate phone number format if provided
             if (leader.altPhone && !/^\d{10}$/.test(String(leader.altPhone))) {
+                toast.error("Please enter a valid 10-digit alternate phone number");
                 return false;
             }
         }
@@ -128,19 +150,32 @@ const EventPopup = () => {
         
         // Validate minimum team size (including team leader)
         if (filledMembers < minMembers) {
+            toast.error(`This event requires a minimum of ${minMembers} team members (including leader). Please add ${minMembers - filledMembers} more member(s).`);
             return false;
         }
         
         // Validate maximum team size (including team leader)
         if (filledMembers > maxMembers) {
+            toast.error(`This event allows a maximum of ${maxMembers} team members (including leader). Please remove ${filledMembers - maxMembers} member(s).`);
             return false;
         }
         
         // Validate each member has both name and email or both are empty
         if (Array.isArray(members)) {
-            for (const m of members) {
+            for (let i = 0; i < members.length; i++) {
+                const m = members[i];
                 if ((m?.name && !m?.email) || (!m?.name && m?.email)) {
+                    toast.error(`Please provide both name and email for member ${i + 1}, or leave both fields empty`);
                     return false;
+                }
+                
+                // Validate email format for members
+                if (m?.email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(m.email)) {
+                        toast.error(`Please enter a valid email address for member ${i + 1}`);
+                        return false;
+                    }
                 }
             }
         }
