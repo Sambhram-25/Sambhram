@@ -14,7 +14,7 @@ export const eventsData = [
     teamSize: "team",
     gradient: "from-purple-500 to-pink-600",
     venue: "EDUSAT",
-    location: "EDUSAT",
+    venue: "EDUSAT",
     studentCoordinator: "Lohith Gowda – 9019844009",
     detailedRules: [
       "2 to 4 members make a team",
@@ -39,7 +39,7 @@ export const eventsData = [
     teamSize: "individual",
     gradient: "from-blue-500 to-cyan-600",
     venue: "CL-203",
-    location: "2nd Floor",
+    venue: "2nd Floor",
     studentCoordinator: "Sinchana P S – 7483081046",
     detailedRules: [
       "It is an individual participation event",
@@ -62,7 +62,7 @@ export const eventsData = [
     teamSize: "team",
     gradient: "from-indigo-500 to-purple-600",
     venue: "SIM Lab",
-    location: "Basement",
+    venue: "Basement",
     studentCoordinator: "Bandhavya K S – 8904827379",
     detailedRules: [
       "Max two participants",
@@ -87,7 +87,7 @@ export const eventsData = [
     teamSize: "2 members",
     gradient: "from-green-500 to-emerald-600",
     venue: "Computer Lab",
-    location: "2nd Floor",
+    venue: "2nd Floor",
     studentCoordinator: "Santosh Y M – 9611535134",
     detailedRules: [
       "Team must consist of exactly 2 members.",
@@ -111,7 +111,7 @@ export const eventsData = [
     teamSize: "team",
     gradient: "from-orange-500 to-red-600",
     venue: "FM Lab",
-    location: "1st Floor",
+    venue: "1st Floor",
     studentCoordinator: "Ms. S B Poorvi (9353181551) & Apeksha (+91 77954 63069)",
     detailedRules: [
       "Each team must consist of 3–5 members.",
@@ -136,7 +136,7 @@ export const eventsData = [
     teamSize: "individual",
     gradient: "from-red-500 to-pink-600",
     venue: "ISE Lab",
-    location: "1st Floor",
+    venue: "1st Floor",
     studentCoordinator: "Ankitha S A – 8591845188",
     detailedRules: [
       "Individual Participation",
@@ -161,7 +161,7 @@ export const eventsData = [
     teamSize: "1-2 members",
     gradient: "from-teal-500 to-blue-600",
     venue: "VLSI Lab",
-    location: "1st Floor",
+    venue: "1st Floor",
     studentCoordinator: "Karthik A T – 9353493357",
     detailedRules: [
       "Individual or team of 2 (dataset provided, no external data).",
@@ -186,7 +186,7 @@ export const eventsData = [
     teamSize: "individual",
     gradient: "from-pink-500 to-rose-600",
     venue: "CAED Lab",
-    location: "Basement",
+    venue: "Basement",
     studentCoordinator: "Janhavi Rathod – 7208773651",
     detailedRules: [
       "Individual participation",
@@ -211,7 +211,7 @@ export const eventsData = [
     teamSize: "individual",
     gradient: "from-blue-600 to-indigo-700",
     venue: "ISE Lab",
-    location: "1st Floor",
+    venue: "1st Floor",
     studentCoordinator: "Nihal S Kolambkar – 7204196221",
     detailedRules: [
       "Individual Participation.",
@@ -229,9 +229,10 @@ export const eventsData = [
     description: "A burst of myth, music, and dramatic expression takes over the stage—watch tradition explode in colours that refuse to sit still.",
     image: "/eventcards/yakshagana.jpg",
     date: "3rd December",
-    time: "Revealing Soon",
+    time: "11:00 AM",
     organizer: "Prof. Ananya J",
     contact: "+91 9845790058",
+    venue: "Auditorium",
     amount: "Varies",
     teamSize: "individual",
     gradient: "from-yellow-600 to-orange-700",
@@ -251,10 +252,11 @@ export const eventsData = [
     description: "The runway becomes a canvas where teams paint stories with fabric and attitude—every step a statement, every pose a spark.",
     image: "/eventcards/shrinagar.jpg",
     date: "3rd December",
-    time: "Revealing Soon",
-    organizer: "Prof. Anupama",
-    contact: "Revealing Soon",
+    time: "12:30 PM",
+    organizer: "Prof. Suraksha",
+    contact: "7994318923",
     amount: "Varies",
+    venue: "Auditorium",
     teamSize: "team",
     gradient: "from-pink-500 to-purple-600",
     studentCoordinator: "Sowparnika Shetty (9113810849)",
@@ -272,9 +274,10 @@ export const eventsData = [
     description: "Three overs of pure chaos where reflexes rule and legends are born—gully spirit collides with raw competitive fire.",
     image: "/eventcards/run-bhumi.jpg",
     date: "3rd December",
-    time: "Revealing Soon",
+    time: "11:00 AM",
     organizer: "Prof. Suryakanth",
     contact: "+91 9980811082",
+    venue: "Volleyball Court",
     amount: "Varies",
     teamSize: "team",
     gradient: "from-green-600 to-emerald-700",
@@ -297,11 +300,12 @@ export const eventsData = [
     description: "One board, many fates—every roll opens a new battlefield where strategy and luck wage a silent war.",
     image: "/eventcards/ludo-samrat.png",
     date: "3rd December",
-    time: "Revealing Soon",
+    time: "12:00 PM",
     organizer: "Prof. Diana D'Souza",
     contact: "+91 7795604890",
     amount: "Varies",
     teamSize: "individual",
+    venue: "Room No:102",
     gradient: "from-red-500 to-orange-600",
     studentCoordinator: "Charan Reddy (9731596319)",
     detailedRules: [
@@ -318,9 +322,10 @@ export const eventsData = [
     description: "A challenge where creativity races the clock—shoot, edit, and deliver a reel that hooks viewers instantly.",
     image: "/eventcards/dhrishya.jpg",
     date: "3rd December",
-    time: "Revealing Soon",
+    time: "10:00 AM",
     organizer: "Prof. Pooja",
-    contact: "Revealing Soon",
+    venue: "Room No:102",
+    contact: "7022474281",
     amount: "Varies",
     teamSize: "team",
     gradient: "from-purple-600 to-pink-600",
@@ -632,7 +637,7 @@ export const eventsData = [
       "Demonstrate a safe working model or prototype during evaluation."
     ],
     venue: "CL-002",
-    location: "Main Expo Hall"
+    venue: "Main Expo Hall"
   },
   {
     id: 29,
@@ -657,7 +662,7 @@ export const eventsData = [
       "Only leak-proof batteries are permitted."
     ],
     venue: "Mechanical Lab",
-    location: "Robotics Arena"
+    venue: "Robotics Arena"
   },
   {
     id: 30,
@@ -681,7 +686,7 @@ export const eventsData = [
       "AI tools to be used will be disclosed during the event."
     ],
     venue: "DSP Lab",
-    location: "Innovation Hub"
+    venue: "Innovation Hub"
   },
   {
     id: 31,
@@ -706,7 +711,7 @@ export const eventsData = [
       "Create and demonstrate a functional circuit within the allotted time."
     ],
     venue: "CAED Lab",
-    location: "Basement"
+    venue: "Basement"
   },
   {
     id: 32,
@@ -731,7 +736,7 @@ export const eventsData = [
       "Bring a laptop with KiCad, OrCAD, or equivalent PCB software pre-installed."
     ],
     venue: "HDL Lab",
-    location: "Basement"
+    venue: "Basement"
   },
   {
     id: 33,
@@ -756,7 +761,7 @@ export const eventsData = [
       "Required materials: pen, printout sheets, projector access, PC, writing pad."
     ],
     venue: "PG Building",
-    location: "3rd floor"
+    venue: "3rd floor"
   },
   {
     id: 34,
@@ -781,7 +786,7 @@ export const eventsData = [
       "Carry pen, A4 sheets, and a writing pad for calculations and notes."
     ],
     venue: "Aerodynamic lab",
-    location: "Launch Grounds"
+    venue: "Launch Grounds"
   },
   {
     id: 35,
@@ -806,6 +811,6 @@ export const eventsData = [
       "Bring pen, A4 sheets, and a writing pad; miscellaneous expenses ₹800."
     ],
     venue: "CL-102",
-    location: "Aero Briefing Room"
+    venue: "Aero Briefing Room"
   }
 ];
