@@ -245,7 +245,7 @@
 /* Tablet Styles (768px - 1024px) */
 @media (min-width: 768px) and (max-width: 1024px) {
     .card-container-events {
-        width: 230px;
+        width: 100%;
         height: 330px;
         margin-bottom: 20px;
     }
@@ -276,7 +276,7 @@
 /* Mobile Styles (up to 767px) */
 @media (max-width: 767px) {
     .card-container-events {
-        width: 210px;
+        width: 100%;
         height: 300px;
         margin-bottom: 18px;
     }
@@ -323,7 +323,7 @@
 /* Small Mobile Styles (up to 480px) */
 @media (max-width: 480px) {
     .card-container-events {
-        width: 190px;
+        width: 100%;
         height: 270px;
         margin-bottom: 15px;
     }
@@ -357,7 +357,7 @@
 /* Extra Small Mobile Styles (up to 360px) */
 @media (max-width: 360px) {
     .card-container-events {
-        width: 170px;
+        width: 100%;
         height: 250px;
         margin-bottom: 12px;
     }

@@ -176,7 +176,7 @@
 /* Mobile (up to 480px) */
 @media (max-width: 480px) {
     .event-card-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
         width: 95%;
         padding: 10px;
