@@ -252,8 +252,8 @@ const EventPopup = () => {
                 <div className="event-popup-bg">
                     <img src="/bg-Cultural-phone.jpg" alt="" />
                 </div>
-                <div className="close-icon">
-                    <i onClick={(e) => { e.stopPropagation(); setPopUpStatus(''); }} className="fa-solid fa-xmark fa-xl" style={{ color: '#ffffff' }}></i>
+                <div className="close-icon" onClick={(e) => { e.stopPropagation(); setPopUpStatus(''); }}>
+                    <i className="fa-solid fa-xmark fa-xl" style={{ color: '#ffffff' }}></i>
                 </div> 
                 <div className="event-content">
                     <div className='pop-main'>
