@@ -395,7 +395,7 @@ export const eventsData = [
     organizer: "Prof. Mohammed Hashim",
     contact: "+91 9061293705",
     amount: "Varies",
-    teamSize: "team",
+    teamSize: "4 members",
     gradient: "from-orange-600 to-red-700",
     studentCoordinator: "Ganesh (7483896493)",
     detailedRules: [

@@ -48,6 +48,7 @@ const EventPopup = () => {
         if (title === "botfury") return { min: 2, max: 3 }; // 2-3 total including leader
         if (title === "circuit craze") return { min: 2, max: 2 }; // 2 total including leader
         if (title === "gerber battle") return { min: 1, max: 2 }; // 1-2 total including leader (can be individual or team)
+        if (title === "agni chakravyuha") return { min: 4, max: 4 }; // 4 total including leader
         
         // Parse from teamSize field for min/max (including team leader in count)
         const nums = ts.match(/\d+/g);
