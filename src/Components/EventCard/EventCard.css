@@ -204,7 +204,9 @@
     top: 0;
     left: 0;
     overflow: hidden;
-    background-color: #0d1b2a;
+    background-image: url('/eventcard-bg.jpeg');
+    background-size: cover;
+    background-position: center;
 }
 
 .back-div {
