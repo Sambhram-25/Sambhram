@@ -164,7 +164,6 @@
     transition: background-position 0.5s ease-in-out,
         background-size 0.75s ease-in-out;
 }
-
 .button-event.clicked {
     background-image: url('../../../public/image.png');
     color: black;

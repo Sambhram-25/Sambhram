@@ -82,11 +82,7 @@ const EventCard = ({eventDatas}) => {
                                     <div className="event-buttons">
                                         <button 
                                             onClick={(e) => { 
-                                                if (isTeamEvent(event)) {
-                                                    setPopUpStatus({ event, mode: 'add' });
-                                                } else {
-                                                    selectEvent(id);
-                                                }
+                                                selectEvent(id);
                                                 e.stopPropagation() 
                                             }} 
                                             className={`button-event ${isSelected ? 'clicked' : ''}`}
