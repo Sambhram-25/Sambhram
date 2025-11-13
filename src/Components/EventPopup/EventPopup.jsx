@@ -1,10 +1,11 @@
 import './EventPopup.css'
 import { StoreContext } from '../../Contexts/StoreContext';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const EventPopup = () => {
     const { setPopUpStatus, popUpStatus, selectEvent, selectedEvent, eventRegistrations, setEventRegistrations } = useContext(StoreContext);
+    const [hasChanges, setHasChanges] = useState(false);
 
     const getEventObj = () => (popUpStatus && popUpStatus.event) ? popUpStatus.event : popUpStatus;
     const getMode = () => (popUpStatus && popUpStatus.mode) ? popUpStatus.mode : 'rules';
@@ -91,6 +92,8 @@ const EventPopup = () => {
                 selectEvent(id);
             }
         }
+        // Reset hasChanges when popup opens
+        setHasChanges(false);
     }, [popUpStatus, mode, eventObj, selectedEvent, id, reg, minMembers, maxMembers]);
 
     const validateTeamRegistration = (registrationData, minMembers, maxMembers) => {
@@ -199,6 +202,8 @@ const EventPopup = () => {
             
             return newRegistrations;
         });
+        // Mark that changes have been made
+        setHasChanges(true);
     };
 
     const handleLeaderChange = (field, value) => {
@@ -238,12 +243,28 @@ const EventPopup = () => {
             const isValid = validateTeamRegistration(reg, minMembers, maxMembers);
             if (!isValid) {
                 // The validation function already shows alerts for specific errors
-                // Just return without adding the event
+                // Just return without saving
                 return;
             }
         }
-        selectEvent(id);
+        
+        const isNewEvent = !selectedEvent.includes(id);
+        
+        // Only call selectEvent if the event is not already selected (for initial add)
+        if (isNewEvent) {
+            selectEvent(id);
+            toast.success("Event added successfully!");
+        } else {
+            toast.success("Changes saved successfully!");
+        }
+        
+        setHasChanges(false);
         setPopUpStatus('');
+    };
+
+    const handleRemoveEvent = () => {
+        selectEvent(id);
+        setHasChanges(false);
     };
 
     return (
@@ -405,7 +426,23 @@ const EventPopup = () => {
                                     </>
                                 )}
                                 {selectedEvent.includes(getId(eventObj)) ? (
-                                    <button className='event-selected-button' onClick={() => selectEvent(getId(eventObj))}>Added</button>
+                                    <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
+                                        <button 
+                                            className='event-select-button' 
+                                            onClick={handleSubmitAdd} 
+                                            style={{ flex: 1 }}
+                                        >
+                                            Save Changes
+                                        </button>
+                                        <button 
+                                            className='event-selected-button' 
+                                            onClick={handleRemoveEvent}
+                                            style={{ flex: 1, backgroundColor: '#e74c3c' }}
+                                            title="Remove event from cart"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
                                 ) : (
                                     mode === 'add' ? (
                                         <button className='event-select-button' onClick={handleSubmitAdd}>Add to Cart</button>

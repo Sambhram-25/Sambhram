@@ -47,31 +47,43 @@ const CheckoutPage = () => {
     return nums ? Number(nums?.[0]) > 1 : false;
   };
 
-  // Prefill Register fields with team leader details from any selected team event (from popup)
+  // Initialize data on first render only - do not auto-sync with team details
   useEffect(() => {
     if (step !== 1) return; // only when on Register step
-    const teamEventWithDetails = items.find(ev => {
-      if (!isTeamEvent(ev)) return false;
-      const id = ev._id ?? ev.id;
-      const reg = eventRegistrations?.[id];
-      return reg?.leader?.name || reg?.leader?.phone;
+    
+    // Only initialize empty fields on first load
+    setData(prev => {
+      // Check if data has already been filled by user
+      if (prev.name || prev.email || prev.mobile) {
+        return prev; // Don't override user's manual entries
+      }
+      
+      // For completely empty data, optionally prefill from team event only once
+      const teamEventWithDetails = items.find(ev => {
+        if (!isTeamEvent(ev)) return false;
+        const id = ev._id ?? ev.id;
+        const reg = eventRegistrations?.[id];
+        return reg?.leader?.name || reg?.leader?.phone;
+      });
+
+      if (teamEventWithDetails) {
+        const id = teamEventWithDetails._id ?? teamEventWithDetails.id;
+        const reg = eventRegistrations?.[id];
+        const leaderName = reg?.leader?.name || "";
+        const leaderEmail = reg?.leader?.email || "";
+        const leaderPhone = reg?.leader?.phone || "";
+
+        return {
+          ...prev,
+          name: leaderName,
+          email: leaderEmail,
+          mobile: leaderPhone
+        };
+      }
+      
+      return prev;
     });
-
-    if (teamEventWithDetails) {
-      const id = teamEventWithDetails._id ?? teamEventWithDetails.id;
-      const reg = eventRegistrations?.[id];
-      const leaderName = reg?.leader?.name || "";
-      const leaderEmail = reg?.leader?.email || "";
-      const leaderPhone = reg?.leader?.phone || "";
-
-      setData(prev => ({
-        ...prev,
-        name: prev.name && prev.name.trim() ? prev.name : leaderName,
-        email: prev.email && prev.email.trim() ? prev.email : leaderEmail,
-        mobile: prev.mobile && String(prev.mobile).trim() ? prev.mobile : leaderPhone
-      }));
-    }
-  }, [step, items, eventRegistrations]);
+  }, [step]);
 
   if (selectedEvent.length == 0) {
     navigate('/events');

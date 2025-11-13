@@ -18,7 +18,17 @@ export const ContextProvider = ({ children }) => {
   const [amount, setAmount] = useState(0);
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [eventRegistrations, setEventRegistrations] = useState({}); // per-event details entered from popup
+  const [eventRegistrations, setEventRegistrations] = useState(() => {
+    const savedRegistrations = sessionStorage.getItem("eventRegistrations");
+    if (savedRegistrations) {
+      try {
+        return JSON.parse(savedRegistrations);
+      } catch (error) {
+        console.error("Error parsing saved event registrations:", error);
+      }
+    }
+    return {}; // per-event details entered from popup
+  });
 
   const [stOrderId, setStOrderId] = useState(() => {
     const savedOrderIds = localStorage.getItem("stOrderIds");
@@ -30,20 +40,30 @@ export const ContextProvider = ({ children }) => {
     return [];
   });
 
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    college: "",
-    branch: "",
-    mobile: "",
-    Othercollege: "",
-    Otherbranch: "",
-    // Team details (optional; shown only for team events)
-    teamLeaderName: "",
-    teamLeaderEmail: "",
-    teamLeaderPhone: "",
-    teamLeaderAltPhone: "",
-    teamMembers: [] // [{ name, email }]
+  const [data, setData] = useState(() => {
+    const savedData = sessionStorage.getItem("registrationFormData");
+    if (savedData) {
+      try {
+        return JSON.parse(savedData);
+      } catch (error) {
+        console.error("Error parsing saved registration data:", error);
+      }
+    }
+    return {
+      name: "",
+      email: "",
+      college: "",
+      branch: "",
+      mobile: "",
+      Othercollege: "",
+      Otherbranch: "",
+      // Team details (optional; shown only for team events)
+      teamLeaderName: "",
+      teamLeaderEmail: "",
+      teamLeaderPhone: "",
+      teamLeaderAltPhone: "",
+      teamMembers: [] // [{ name, email }]
+    };
   });
 
   const [selectedEvent, setSelectedEvent] = useState(() => {
@@ -64,6 +84,16 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("eventDatas", JSON.stringify(eventDatas));
   }, [eventDatas]);
+
+  // Save registration form data to sessionStorage
+  useEffect(() => {
+    sessionStorage.setItem("registrationFormData", JSON.stringify(data));
+  }, [data]);
+
+  // Save event registrations (team details) to sessionStorage
+  useEffect(() => {
+    sessionStorage.setItem("eventRegistrations", JSON.stringify(eventRegistrations));
+  }, [eventRegistrations]);
 
   useEffect(() => {
     loadEvents();
@@ -125,10 +155,8 @@ export const ContextProvider = ({ children }) => {
 
     if (selectedEvent.includes(id)) {
       setSelectedEvent((prev) => prev.filter((eventId) => eventId !== id));
-      toast.success("Event removed");
     } else {
       setSelectedEvent((prev) => [...prev, id]);
-      toast.success("Event added");
     }
   };
 
@@ -332,6 +360,9 @@ export const ContextProvider = ({ children }) => {
       teamLeaderAltPhone: "",
       teamMembers: []
     });
+    setEventRegistrations({});
+    sessionStorage.removeItem("registrationFormData");
+    sessionStorage.removeItem("eventRegistrations");
     setStep(1);
     setSelectedEvent([]);
     setAmount(0);
