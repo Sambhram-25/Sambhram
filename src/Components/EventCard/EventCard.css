@@ -165,10 +165,11 @@
         background-size 0.75s ease-in-out;
 }
 .button-event.clicked {
-    background-image: url('../../../public/image.png');
-    color: black;
+    background: linear-gradient(135deg, #0066ff 0%, #0044cc 100%);
+    color: white;
     transform: scale(1.05);
     transition: transform 0.2s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.6);
 }
 
 .button-event:hover {
